@@ -4,11 +4,11 @@
 
 #define WIDTH 640.0f
 #define HEIGHT 600.0f
-#define TIME 1
+#define TIME 15
 
-Player::Player() :is_active(false), image(NULL), location(0.0f), box_size(0.0f),
+Player::Player() :image(NULL), location(0.0f), box_size(0.0f),
 angle(0.0f),
-speed(0.0f), hp(0.0f), fuel(0.0f), barrier_count(0),
+speed(0.0f), barrier_count(0),
 barrier(nullptr)
 {
 
@@ -24,12 +24,11 @@ Player::~Player()
 //初期化処理
 void Player::Initialize()
 {
-	is_active = true;
 	location = Vector2D(190.0f, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 60.0f);
 	speed = 3.0f;
 	barrier_count = 3;
-	keyTime = 0;
+	keyCount = 0;
 
 	//画像の読み込み
 	image = LoadGraph("Resource/images/car1pol.bmp");
@@ -46,23 +45,11 @@ void Player::Initialize()
 //更新処理
 void Player::Update()
 {
-	//操作不可状態であれば、自身を回転させる
-	if (!is_active)
-	{
-		speed = 1.0f;
-		return;
-	}
-
 	//移動処理
 	Movement();
 
 	//加減速処理
 	Acceleration();
-
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_START))
-	{
-		is_active = false;
-	}
 
 	//バリア処理
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B) && barrier_count > 0)
@@ -91,20 +78,20 @@ void Player::Movement()
 {
 	Vector2D move = Vector2D(0.0f);
 	angle = 0.0f;
-	keyTime++;
+	keyCount++;
 
 	//十字移動処理
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_LEFT)
-		&& 30 <= keyTime)
+		&& TIME <= keyCount)
 	{
 		move += Vector2D(-130.0f, 0.0f);
-		keyTime = 0;
+		keyCount = 0;
 	}
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_RIGHT)
-		&& 30 <= keyTime)
+		&& TIME <= keyCount)
 	{
 		move += Vector2D(130.0f, 0.0f);
-		keyTime = 0;
+		keyCount = 0;
 	}
 
 	location += move;
@@ -157,21 +144,6 @@ void Player::Finalize()
 	}
 }
 
-
-//状態設定処理
-void Player::SetActive(bool flg)
-{
-	this->is_active = flg;
-}
-
-
-//体力減少処理
-void Player::DecreaseHp(float value)
-{
-	this->hp += value;
-}
-
-
 //位置情報取得処理
 Vector2D Player::GetLocation()const
 {
@@ -190,20 +162,6 @@ Vector2D Player::GetBoxSize()const
 float Player::GetSpeed()const
 {
 	return this->speed;
-}
-
-
-//燃料取得処理
-float Player::GetFuel()const
-{
-	return this->fuel;
-}
-
-
-//体力取得処理
-float Player::GetHp()const
-{
-	return this->hp;
 }
 
 

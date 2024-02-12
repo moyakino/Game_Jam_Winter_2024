@@ -107,8 +107,6 @@ eSceneType GameMainScene::Update()
             //当たり判定の確認
             if (IsHitCheck(player, enemy[i]))
             {
-                player->SetActive(false);
-                player->DecreaseHp(-50.0f);
                 enemy[i]->Finalize();
                 delete enemy[i];
                 enemy[i] = nullptr;
@@ -158,23 +156,6 @@ void GameMainScene::Draw()const
     {
         DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, barrier_image, TRUE, FALSE);
     }
-
-    //燃料ゲージの描画
-    float fx = 510.0f;
-    float fy = 390.0f;
-    DrawFormatString(fx, fy, GetColor(0, 0, 0), "FUEL METER");
-    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetFuel() * 100 / 20000), fy + 40.0f,
-        GetColor(0, 102, 204), TRUE);
-    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
-
-    //体力ゲージの描画
-    fx = 510.0f;
-    fy = 430.0f;
-    DrawFormatString(fx, fy, GetColor(0, 0, 0), "PLAYER HP");
-    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / 1000), fy + 40.0f,
-        GetColor(255, 0, 0), TRUE);
-    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0),
-        FALSE);
 }
 
 
