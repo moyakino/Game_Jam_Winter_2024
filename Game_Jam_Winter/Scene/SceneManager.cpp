@@ -26,6 +26,9 @@ void SceneManager::Initialize()
 	//ウィンドウのタイトルを設定
 	SetMainWindowText("Drive&Avoid");
 
+	//Log.txtを生成しないようにする
+	SetOutApplicationLogValidFlag(FALSE);
+
 	//ウィンドウモードで起動
 	if (ChangeWindowMode(TRUE) != DX_CHANGESCREEN_OK)
 	{
