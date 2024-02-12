@@ -9,7 +9,7 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	//タイトル
 	SetMainWindowText("Game_Jam_Winter");
 
-	//Log.txtを生成しないようにするjjgjgj
+	//Log.txtを生成しないようにする
 	SetOutApplicationLogValidFlag(FALSE);
 
 	//ウィンドウモードで起動
