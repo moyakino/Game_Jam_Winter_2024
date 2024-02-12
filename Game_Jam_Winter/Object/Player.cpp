@@ -3,7 +3,7 @@
 #include "DxLib.h"
 
 #define WIDTH 640.0f
-#define HEIGHT 650.0f
+#define HEIGHT 600.0f
 
 Player::Player() :is_active(false), image(NULL), location(0.0f), box_size(0.0f),
 angle(0.0f),
@@ -24,7 +24,7 @@ Player::~Player()
 void Player::Initialize()
 {
 	is_active = true;
-	location = Vector2D(320.0f, 380.0f);
+	location = Vector2D(WIDTH / 4, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 60.0f);
 	angle = 0.0f;
 	speed = 3.0f;
@@ -101,6 +101,7 @@ void Player::Draw()
 {
 	//プレイヤー画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.0f, angle, image, TRUE);
+	//DrawCircle(location.x, location.y, 5, 0xffffff, TRUE);
 
 	//バリアが生成されていたら、描画を行う
 	if (barrier != nullptr)
@@ -203,14 +204,6 @@ void Player::Movement()
 	{
 		move += Vector2D(1.0f, 0.0f);
 		angle = DX_PI_F / 18;
-	}
-	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_UP))
-	{
-		move += Vector2D(0.0f, -1.0f);
-	}
-	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_DOWN))
-	{
-		move += Vector2D(0.0f, 1.0f);
 	}
 
 	location += move;
