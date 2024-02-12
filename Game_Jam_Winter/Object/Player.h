@@ -17,6 +17,8 @@ private:
 	int barrier_count;  //バリアの枚数
 	Barrier* barrier;   //バリア
 
+	int keyTime;        //入力クールタイム
+
 public:
 	Player();
 	~Player();
