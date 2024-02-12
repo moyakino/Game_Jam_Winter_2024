@@ -3,6 +3,9 @@
 #include "DxLib.h"
 #include <math.h>
 
+#define WIDTH 640
+#define HEIGHT 600
+
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
 barrier_image(NULL),
 mileage(0), player(nullptr),
@@ -112,12 +115,6 @@ eSceneType GameMainScene::Update()
             }
         }
     }
-
-    //プレイヤーの燃料化体力が０未満なら、リザルトに遷移する
-    if (player->GetFuel() < 0.0f || player->GetHp() < 0.0f)
-    {
-        return eSceneType::E_RESULT;
-    }
     return GetNowScene();
 }
 
@@ -141,7 +138,7 @@ void GameMainScene::Draw()const
     player->Draw();
 
     //UIの描画
-    DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
+    DrawBox(500, 0, WIDTH, HEIGHT, GetColor(0, 153, 0), TRUE);
     SetFontSize(16);
     DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
     DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", high_score);

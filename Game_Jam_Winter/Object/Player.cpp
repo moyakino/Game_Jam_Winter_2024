@@ -28,8 +28,6 @@ void Player::Initialize()
 	box_size = Vector2D(31.0f, 60.0f);
 	angle = 0.0f;
 	speed = 3.0f;
-	hp = 1000;
-	fuel = 6000;
 	barrier_count = 3;
 
 	//画像の読み込み
@@ -58,9 +56,6 @@ void Player::Update()
 		}
 		return;
 	}
-
-	//燃料の消費
-	fuel -= speed;
 
 	//移動処理
 	Movement();
