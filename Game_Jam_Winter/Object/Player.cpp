@@ -2,6 +2,8 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
+#define WIDTH 640.0f
+#define HEIGHT 650.0f
 
 Player::Player() :is_active(false), image(NULL), location(0.0f), box_size(0.0f),
 angle(0.0f),
@@ -214,8 +216,8 @@ void Player::Movement()
 	location += move;
 
 	//画面外に行かないように制限する
-	if ((location.x < box_size.x) || (location.x >= 640.f - 180.0f) ||
-		(location.y < box_size.y) || (location.y >= 480.0f - box_size.y))
+	if ((location.x < box_size.x) || (location.x >= WIDTH - 180.0f) ||
+		(location.y < box_size.y) || (location.y >= HEIGHT - box_size.y))
 	{
 		location -= move;
 	}
