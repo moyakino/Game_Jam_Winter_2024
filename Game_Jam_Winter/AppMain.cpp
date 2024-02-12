@@ -5,7 +5,7 @@
 #include "Scene/SceneManager.h"
 
 #define WIDTH 640
-#define HEIGHT 650
+#define HEIGHT 600
 
 //メイン関数（プログラムはここから始まります。）
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrecInstance,
