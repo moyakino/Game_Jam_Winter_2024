@@ -4,10 +4,17 @@
 #include "DxLib.h"
 #include "Scene/SceneManager.h"
 
+#define WIDTH 640
+#define HEIGHT 650
+
 //メイン関数（プログラムはここから始まります。）
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrecInstance,
 	_In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
+	//ウインドウサイズの変更
+	SetGraphMode(WIDTH, HEIGHT, 32);
+	SetMainWindowText("Scrap Car Music");
+
 	//例外処理（異常が発生したら、catch分に飛びます）
 	try
 	{
