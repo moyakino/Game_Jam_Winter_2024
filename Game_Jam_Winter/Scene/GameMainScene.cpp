@@ -130,10 +130,10 @@ eSceneType GameMainScene::Update()
     }
 
     //プレイヤーの燃料化体力が０未満なら、リザルトに遷移する
-    if (player->GetFuel() < 0.0f || player->GetHp() < 0.0f)
+    /*if (player->GetFuel() < 0.0f || player->GetHp() < 0.0f)
     {
         return eSceneType::E_RESULT;
-    }
+    }*/
     return GetNowScene();
 }
 
