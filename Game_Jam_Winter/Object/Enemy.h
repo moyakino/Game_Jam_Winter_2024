@@ -24,7 +24,7 @@ public:
 	~Enemy();
 
 	void Initialize();            //初期化処理
-	void Updata(float speed);     //更新処理
+	void Updata();     //更新処理
 	void Draw()const;             //描画処理
 	void Finalize();              //終了時処理
 

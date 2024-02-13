@@ -92,9 +92,13 @@ eSceneType GameMainScene::Update()
     //移動距離の更新　生成が下の部分だとスピードが上手く増えていかないための微調整で足している
     mileage += (int)player->GetSpeed() + 5;
 
+    //テスト
+    Test_mileage = mileage / 20 % 100;
+
     //敵生成処理 間隔で決めている
     if (mileage / 20 % 100 == 0)
     {
+        
         // i < 10 の 10は敵の最大数
         for (int i = 0; i < 10; i++)
         {
@@ -120,14 +124,14 @@ eSceneType GameMainScene::Update()
         //敵が生成されていたら中に入る
         if (enemy[i] != nullptr)
         {
-            //敵のスピードを更新している
-            enemy[i]->Updata(player->GetSpeed());
+            //敵のスピードを更新している これがないとmileageの処理が更新されず動いているように見えなくなる
+            enemy[i]->Updata();
 
             //画面外に行ったら、敵を削除してスコア加算 640.0f
             if (enemy[i]->GetLocation().y >= 750.0f)
             {
                 //敵が避けれたから敵の避けたカウントを増分
-                enemy_count[enemy[i]->GetType()]++;
+                //enemy_count[enemy[i]->GetType()]++;
 
                 //Finalizeの中には何も入っていないがもしEnemy側に画像の読み込み等があった場合、この関数からdelete等を使用する
                 //今回は画像の読み込み等がGameMainで完結しているのでここから何かすることはない
@@ -188,6 +192,7 @@ void GameMainScene::Draw()const
 
     //テスト用
     DrawFormatString(0, 20, GetColor(255, 255, 255), "%0.1ffps %d秒", main_song_fps, main_song_count);
+    DrawFormatString(0, 40, GetColor(255, 255, 255), "%d:mileage", Test_mileage);
 
 
     //UIの描画 DrawBoxで緑の部分描画
