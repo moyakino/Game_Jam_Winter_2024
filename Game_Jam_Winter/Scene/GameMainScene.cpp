@@ -81,6 +81,8 @@ void GameMainScene::Initialize()
 //更新処理
 eSceneType GameMainScene::Update()
 {
+    main_song_fps++;
+
     //MAINSONG再生
     PlaySoundMem(main_song_handle, DX_PLAYTYPE_BACK, FALSE);
 
@@ -153,6 +155,12 @@ eSceneType GameMainScene::Update()
     {
         return eSceneType::E_RESULT;
     }*/
+
+    if (main_song_fps > 59) {
+        main_song_fps = 0;
+        main_song_count++;
+    }
+
     return GetNowScene();
 }
 
@@ -177,6 +185,10 @@ void GameMainScene::Draw()const
 
     //プレイヤーの描画
     player->Draw();
+
+    //テスト用
+    DrawFormatString(0, 20, GetColor(255, 255, 255), "%0.1ffps %d秒", main_song_fps, main_song_count);
+
 
     //UIの描画 DrawBoxで緑の部分描画
     DrawBox(500, 0, WIDTH, HEIGHT, GetColor(0, 153, 0), TRUE);
