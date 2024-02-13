@@ -151,16 +151,31 @@ eSceneType GameMainScene::Update()
                 player->combo1 += 1;
                 if (player->combo1 > 9)
                 {
+                    if (!player->Digit2)
+                    {
+                        player->nowComboDigit = 2;
+                        player->Digit2 = TRUE;
+                    }
                     player->combo10 += 1;
                     player->combo1 = 0;
-                    player->nowComboDigit = 2;
-                }
 
-                if (player->combo10 > 9)
-                {
-                    player->combo100 += 1;
-                    player->combo10 = 0;
-                    player->nowComboDigit = 3;
+                    if (player->combo10 > 9)
+                    {
+                        if (!player->Digit3)
+                        {
+                            player->nowComboDigit = 3;
+                            player->Digit3 = TRUE;
+                        }
+                        player->combo100 += 1;
+                        player->combo10 = 0;
+
+                        if (player->combo100 > 9)
+                        {
+                            player->combo100 = 9;
+                            player->combo10 = 9;
+                            player->combo1 = 9;
+                        }
+                    }
                 }
             }
         }

@@ -4,7 +4,7 @@
 
 #define WIDTH 640.0f
 #define HEIGHT 600.0f
-#define TIME 15
+#define TIME 8
 
 Player::Player() :image(NULL), location(0.0f), box_size(0.0f),
 angle(0.0f),speed(0.0f)
@@ -27,6 +27,8 @@ void Player::Initialize()
 	combo10 = 0;
 	combo100 = 0;
 	nowComboDigit = 1;
+	Digit2 = FALSE;
+	Digit3 = FALSE;
 
 	location = Vector2D(190.0f, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 60.0f);

@@ -20,6 +20,8 @@ public:
 	Player();
 	~Player();
 
+	bool Digit2;
+	bool Digit3;
 	int nowComboDigit;
 	int combo1;
 	int combo10;
