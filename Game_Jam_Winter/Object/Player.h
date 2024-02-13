@@ -9,6 +9,7 @@ private:
 	int image;          //画像データ
 	int aura[4];        //画像データ
 	int nowAura;        //今のオーラ
+	int FontHandle;
 	Vector2D location;  //位置座標
 	Vector2D box_size;  //当たり判定の大きさ
 	float angle;        //角度
@@ -18,6 +19,13 @@ private:
 public:
 	Player();
 	~Player();
+
+	bool Digit2;
+	bool Digit3;
+	int nowComboDigit;
+	int combo1;
+	int combo10;
+	int combo100;
 
 	void Initialize();   //初期化処理
 	void Update();       //更新処理
