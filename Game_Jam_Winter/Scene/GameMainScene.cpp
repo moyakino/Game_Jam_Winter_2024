@@ -146,6 +146,22 @@ eSceneType GameMainScene::Update()
                 enemy[i]->Finalize();
                 delete enemy[i];
                 enemy[i] = nullptr;
+
+                //コンボ処理
+                player->combo1 += 1;
+                if (player->combo1 > 9)
+                {
+                    player->combo10 += 1;
+                    player->combo1 = 0;
+                    player->nowComboDigit = 2;
+                }
+
+                if (player->combo10 > 9)
+                {
+                    player->combo100 += 1;
+                    player->combo10 = 0;
+                    player->nowComboDigit = 3;
+                }
             }
         }
     }

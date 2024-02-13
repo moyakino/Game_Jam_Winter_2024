@@ -23,10 +23,11 @@ Player::~Player()
 void Player::Initialize()
 {
 	nowAura = 0;
-	nowCombo[0,1,2] = 0;
 	combo1 = 0;
 	combo10 = 0;
 	combo100 = 0;
+	nowComboDigit = 1;
+
 	location = Vector2D(190.0f, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 60.0f);
 	speed = 3.0f;
@@ -91,30 +92,26 @@ void Player::Movement()
 //描画処理
 void Player::Draw()
 {
-	combo1 = 0;
-	combo10 = 0;
-	combo100 = 2;
 	//プレイヤー画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.0f, angle, image, TRUE);
-
-	//コンボの表示
-	if (nowCombo[0] > 1)
+	
+	switch (nowComboDigit)
 	{
-		DrawFormatStringToHandle(location.x - 30, location.y - 25, 0x00ffff, FontHandle, "%d%d%d", combo100, combo10, combo1);
-	}
-	else if (nowCombo[1] > 1)
-	{
-		DrawFormatStringToHandle(location.x - 20, location.y - 25, 0x00ffff, FontHandle, "%d%d", combo10, combo1);
-	}
-	else
-	{
+	case 1:
 		DrawFormatStringToHandle(location.x - 10, location.y - 25, 0x00ffff, FontHandle, "%d", combo1);
-	}
+		break;
 
-	
-	
-	
-	
+	case 2:
+		DrawFormatStringToHandle(location.x - 20, location.y - 25, 0x00ffff, FontHandle, "%d%d", combo10, combo1);
+		break;
+
+	case 3:
+		DrawFormatStringToHandle(location.x - 30, location.y - 25, 0x00ffff, FontHandle, "%d%d%d", combo100, combo10, combo1);
+		break;
+
+	default:
+		break;
+	}
 
 	//当たり判定用
 	DrawBox(location.x - box_size.x, location.y - box_size.y, 
