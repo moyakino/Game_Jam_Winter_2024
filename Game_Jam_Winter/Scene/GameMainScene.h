@@ -11,6 +11,7 @@ private:
 	//テスト用
 	float main_song_fps = 0.0f;
 	int main_song_count = 0;
+	int Test_mileage = 0;
 
 	int high_score;      //ハイスコア
 	int back_ground;     //背景画像

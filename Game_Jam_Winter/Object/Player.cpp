@@ -39,7 +39,7 @@ void Player::Initialize()
 
 	//画像の読み込み
 	image = LoadGraph("Resource/images/car1pol.bmp");
-	LoadDivGraph("Resource/images/aura.png", 4, 4, 1, 90, 171, aura);
+	LoadDivGraph("Resource/images/aura.png", 4, 4, 1, 90, 140, aura);
 
 	//エラーチェック
 	if (image == -1)
@@ -120,7 +120,7 @@ void Player::Draw()
 		location.x + box_size.x, location.y + box_size.y, 0xffffff, FALSE);
 
 	int x = 45;
-	int y = 85;
+	int y = 70;
 	switch (nowAura)
 	{
 	case 0:
