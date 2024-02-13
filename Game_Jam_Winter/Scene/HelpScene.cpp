@@ -2,7 +2,7 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-HelpScene::HelpScene() :background_image(NULL)
+HelpScene::HelpScene() :background_image(NULL), Help_song_handle(0)
 {
 
 }
@@ -19,10 +19,19 @@ void HelpScene::Initialize()
 	//画像の読み込み
 	background_image = LoadGraph("Resource/images/Title.bmp");
 
+	//タイトルに戻る時のSE読み込み
+	Help_song_handle = LoadSoundMem("Resource/music/SE/Title_kettei_se.wav");
+
 	//エラーチェック
 	if (background_image == -1)
 	{
 		throw("Resource/images.Title.bmpがありません\n");
+	}
+
+	if (Help_song_handle == -1)
+	{
+		//敵用の車の分割読み込み
+		throw("Resource/music/SE/Title_kettei_se.wavがありません\n");
 	}
 }
 
@@ -30,10 +39,12 @@ void HelpScene::Initialize()
 //更新処理
 eSceneType HelpScene::Update()
 {
+	/*PlaySoundMem(Main_song_handle, DX_PLAYTYPE_BACK, FALSE);*/
+
 	//Bボタンが押されたら、タイトルに戻る
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
-		PlaySoundFile("", DX_PLAYTYPE_NORMAL);
+		PlaySoundMem(Help_song_handle, DX_PLAYTYPE_BACK, FALSE);
 		return eSceneType::E_TITLE;
 	}
 

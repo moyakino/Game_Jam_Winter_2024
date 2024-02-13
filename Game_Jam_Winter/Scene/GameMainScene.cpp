@@ -8,7 +8,7 @@
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
 barrier_image(NULL),
-mileage(0), player(nullptr),
+mileage(0), main_song_handle(0), player(nullptr),
 enemy(nullptr)
 {
     //敵画像及び敵のカウント配列の初期化
@@ -21,7 +21,7 @@ enemy(nullptr)
 
 GameMainScene::~GameMainScene()
 {
-
+    DeleteSoundMem(main_song_handle);
 }
 
 //初期化処理
@@ -150,6 +150,37 @@ eSceneType GameMainScene::Update()
                 enemy[i]->Finalize();
                 delete enemy[i];
                 enemy[i] = nullptr;
+
+                //コンボ処理
+                player->combo1 += 1;
+                if (player->combo1 > 9)
+                {
+                    if (!player->Digit2)
+                    {
+                        player->nowComboDigit = 2;
+                        player->Digit2 = TRUE;
+                    }
+                    player->combo10 += 1;
+                    player->combo1 = 0;
+
+                    if (player->combo10 > 9)
+                    {
+                        if (!player->Digit3)
+                        {
+                            player->nowComboDigit = 3;
+                            player->Digit3 = TRUE;
+                        }
+                        player->combo100 += 1;
+                        player->combo10 = 0;
+
+                        if (player->combo100 > 9)
+                        {
+                            player->combo100 = 9;
+                            player->combo10 = 9;
+                            player->combo1 = 9;
+                        }
+                    }
+                }
             }
         }
     }
