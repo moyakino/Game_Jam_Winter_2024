@@ -18,7 +18,7 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	//画像の読み込み
-	background_image = LoadGraph("Resource/images/Title.bmp");
+	background_image = LoadGraph("Resource/images/");
 	menu_image = LoadGraph("Resource/images/menu.bmp");
 	cursor_image = LoadGraph("Resource/images/cone.bmp");
 
@@ -67,6 +67,7 @@ eSceneType TitleScene::Update()
 	//カーソル決定（決定した画面に遷移する）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
+		//StopSoundMem();
 		switch (menu_cursor)
 		{
 		case 0:
@@ -85,6 +86,8 @@ eSceneType TitleScene::Update()
 
 	//現在のシーンタイプを返す
 	return GetNowScene();
+
+	//
 }
 
 
