@@ -8,7 +8,7 @@
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
 barrier_image(NULL),
-mileage(0), player(nullptr),
+mileage(0), main_song_handle(0), player(nullptr),
 enemy(nullptr)
 {
     //敵画像及び敵のカウント配列の初期化
@@ -21,7 +21,7 @@ enemy(nullptr)
 
 GameMainScene::~GameMainScene()
 {
-
+    DeleteSoundMem(main_song_handle);
 }
 
 //初期化処理
