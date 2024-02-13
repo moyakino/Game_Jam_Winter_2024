@@ -11,6 +11,7 @@ barrier_image(NULL),
 mileage(0), player(nullptr),
 enemy(nullptr)
 {
+    //敵画像及び敵のカウント配列の初期化
     for (int i = 0; i < 3; i++)
     {
         enemy_image[i] = NULL;
@@ -30,34 +31,47 @@ void GameMainScene::Initialize()
     ReadHighScore();
 
     //画像の読み込み
-    back_ground = LoadGraph("Resource/images/back01.bmp");
-    barrier_image = LoadGraph("Resource/images/barrier.png");
-    int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120,
-        enemy_image);
+    back_ground = LoadGraph("Resource/images/back01.bmp"); //背景画像(道路の画像)の読み込み
+    barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
+    int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image); //敵の分割読み込み
 
-    //エラーチェック
+    //音楽(BGM,SE,MAINSONG)の読み込み
+    main_song_handle = LoadSoundMem("Resource/music/MAINSONG/GameMain_main_song_1.wav");
+    //ChangeVolumeSoundMem(100, main_song_handle);
+
+    //エラーチェック 画像が正しく読み込まれているかの確認
     if (back_ground == -1)
     {
+        //背景画像(道路の画像)
         throw("Resource/images/back.bmpがありません\n");
-    }
-
-    if (result == -1)
-    {
-        throw("Resource/images/car.bmpがありません\n");
     }
 
     if (barrier_image == -1)
     {
+        //バリア画像の読み込み
         throw("Resource/images/barrier.pngがありません\n");
     }
 
-    //オブジェクトの生成
+    if (result == -1)
+    {
+        //敵用の車の分割読み込み
+        throw("Resource/images/car.bmpがありません\n");
+    }
+
+    if (main_song_handle == -1)
+    {
+        //敵用の車の分割読み込み
+        throw("Resource/music/MAINSONG/GameMain_main_song_1.wavがありません\n");
+    }
+
+    //オブジェクトの生成 プレイヤーと敵 敵の最大数は10？
     player = new Player;
     enemy = new Enemy * [10];
 
     //オブジェクトの初期化
     player->Initialize();
 
+    //画面内の敵の最大出現数？
     for (int i = 0; i < 10; i++)
     {
         enemy[i] = nullptr;
@@ -67,20 +81,30 @@ void GameMainScene::Initialize()
 //更新処理
 eSceneType GameMainScene::Update()
 {
+    //MAINSONG再生
+    PlaySoundMem(main_song_handle, DX_PLAYTYPE_BACK, FALSE);
+
     //プレイヤーの更新
     player->Update();
 
-    //移動距離の更新
+    //移動距離の更新　生成が下の部分だとスピードが上手く増えていかないための微調整で足している
     mileage += (int)player->GetSpeed() + 5;
 
-    //敵生成処理
+    //敵生成処理 間隔で決めている
     if (mileage / 20 % 100 == 0)
     {
+        // i < 10 の 10は敵の最大数
         for (int i = 0; i < 10; i++)
         {
+            //敵の添え字の敵が生成されていないなら生成する
             if (enemy[i] == nullptr)
             {
-                int type = GetRand(3) % 3;
+                //int type = GetRand(3) % 3;
+
+                //乱数 0：黄色　１：青色　２：赤色
+                //int type = GetRand(1);
+
+                int type = 0;
                 enemy[i] = new Enemy(type, enemy_image[type]);
                 enemy[i]->Initialize();
                 break;
@@ -91,16 +115,26 @@ eSceneType GameMainScene::Update()
     //敵の更新と当たり判定チェック
     for (int i = 0; i < 10; i++)
     {
+        //敵が生成されていたら中に入る
         if (enemy[i] != nullptr)
         {
+            //敵のスピードを更新している
             enemy[i]->Updata(player->GetSpeed());
 
-            //画面外に行ったら、敵を削除してスコア加算
-            if (enemy[i]->GetLocation().y >= 640.0f)
+            //画面外に行ったら、敵を削除してスコア加算 640.0f
+            if (enemy[i]->GetLocation().y >= 750.0f)
             {
+                //敵が避けれたから敵の避けたカウントを増分
                 enemy_count[enemy[i]->GetType()]++;
+
+                //Finalizeの中には何も入っていないがもしEnemy側に画像の読み込み等があった場合、この関数からdelete等を使用する
+                //今回は画像の読み込み等がGameMainで完結しているのでここから何かすることはない
                 enemy[i]->Finalize();
+
+                //画面外に出た分の敵を削除する
                 delete enemy[i];
+
+                //空いた分の配列を初期化している
                 enemy[i] = nullptr;
             }
 
@@ -113,19 +147,28 @@ eSceneType GameMainScene::Update()
             }
         }
     }
+
+    //プレイヤーの燃料化体力が０未満なら、リザルトに遷移する
+    /*if (player->GetFuel() < 0.0f || player->GetHp() < 0.0f)
+    {
+        return eSceneType::E_RESULT;
+    }*/
     return GetNowScene();
 }
 
 //描画処理
 void GameMainScene::Draw()const
 {
-    //背景画像の描画
-    DrawGraph(0, mileage % 480 - 480, back_ground, TRUE);
-    DrawGraph(0, mileage % 480, back_ground, TRUE);
+    //背景画像(道路)の描画
+    //なぜ480か？ 今回の道路の画像の横幅が480になっている２個目のDrawGraphで上の部分を描画しており
+    //１回目の部分は徐々にスクロールしていく際にずれが出てくるため、それを１回目の部分でくっつけて(重ねている？)切れ目なしでスクロールしているように見せている 480
+    DrawGraph(0, mileage % 650 - 650, back_ground, TRUE);
+    DrawGraph(0, mileage % 650, back_ground, TRUE);
 
     //敵の描画
     for (int i = 0; i < 10; i++)
     {
+        //敵が生成されていたら描画する
         if (enemy[i] != nullptr)
         {
             enemy[i]->Draw();
@@ -135,8 +178,9 @@ void GameMainScene::Draw()const
     //プレイヤーの描画
     player->Draw();
 
-    //UIの描画
+    //UIの描画 DrawBoxで緑の部分描画
     DrawBox(500, 0, WIDTH, HEIGHT, GetColor(0, 153, 0), TRUE);
+
     SetFontSize(16);
     DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
     DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", high_score);
@@ -150,12 +194,6 @@ void GameMainScene::Draw()const
     DrawFormatString(555, 220, GetColor(255, 255, 255), "%08d", mileage / 10);
     DrawFormatString(510, 240, GetColor(0, 0, 0), "スピード");
     DrawFormatString(555, 260, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());
-
-    //バリア枚数の描画
-    for (int i = 0; i < player->GetBarrierCount(); i++)
-    {
-        DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, barrier_image, TRUE, FALSE);
-    }
 }
 
 
@@ -231,12 +269,6 @@ void GameMainScene::ReadHighScore()
 //当たり判定処理（プレイヤーと敵）
 bool GameMainScene::IsHitCheck(Player* p, Enemy* e)
 {
-    //プレイヤーがバリアを張っていたら、当たり判定を無視する
-    if (p->IsBarrier())
-    {
-        return false;
-    }
-
     //敵情報がなければ、当たり判定を無視する
     if (e == nullptr)
     {

@@ -13,8 +13,11 @@ private:
 	int mileage;         //走行距離
 	int enemy_image[3];  //敵画像
 	int enemy_count[3];  //通り過ぎた敵カウント
+
+	int main_song_handle;//ゲームメインで流れるメインの曲用変数
+
 	Player* player;      //プレイヤー
-	Enemy** enemy;       //敵
+	Enemy** enemy;       //敵 ダブルポインタなので配列のだったら配列の先頭のアドレス(場所)を指す
 
 public:
 	GameMainScene();
