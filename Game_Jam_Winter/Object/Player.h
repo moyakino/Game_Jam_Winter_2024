@@ -9,6 +9,11 @@ private:
 	int image;          //画像データ
 	int aura[4];        //画像データ
 	int nowAura;        //今のオーラ
+	int nowCombo[3];
+	int combo1;
+	int combo10;
+	int combo100;
+	int FontHandle;
 	Vector2D location;  //位置座標
 	Vector2D box_size;  //当たり判定の大きさ
 	float angle;        //角度

@@ -23,10 +23,16 @@ Player::~Player()
 void Player::Initialize()
 {
 	nowAura = 0;
+	nowCombo[0,1,2] = 0;
+	combo1 = 0;
+	combo10 = 0;
+	combo100 = 0;
 	location = Vector2D(190.0f, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 60.0f);
 	speed = 3.0f;
 	keyCount = 0;
+
+	FontHandle = CreateFontToHandle(NULL, 40, 8);
 
 	//画像の読み込み
 	image = LoadGraph("Resource/images/car1pol.bmp");
@@ -38,8 +44,6 @@ void Player::Initialize()
 		throw("Resource/images/car1pol.bmpがありません\n");
 	}
 }
-
-
 
 //更新処理
 void Player::Update()
@@ -82,26 +86,36 @@ void Player::Movement()
 	if (InputControl::GetButton(XINPUT_BUTTON_A)) nowAura = 1;
 	if (InputControl::GetButton(XINPUT_BUTTON_X)) nowAura = 2;
 	if (InputControl::GetButton(XINPUT_BUTTON_Y)) nowAura = 3;
-
 }
-
 
 //描画処理
 void Player::Draw()
 {
-	//int a = 60;
-	//int b = 190;
-	//int c = 320;
-	//int d = 450;
-	////各レーンのど真ん中
-	//DrawLine(a, 0, a, 600, 0xff0000, 4);
-	//DrawLine(b, 0, b, 600, 0xff0000, 4);
-	//DrawLine(c, 0, c, 600, 0xff0000, 4);
-	//DrawLine(d, 0, d, 600, 0xff0000, 4);
-
-
+	combo1 = 0;
+	combo10 = 0;
+	combo100 = 2;
 	//プレイヤー画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.0f, angle, image, TRUE);
+
+	//コンボの表示
+	if (nowCombo[0] > 1)
+	{
+		DrawFormatStringToHandle(location.x - 30, location.y - 25, 0x00ffff, FontHandle, "%d%d%d", combo100, combo10, combo1);
+	}
+	else if (nowCombo[1] > 1)
+	{
+		DrawFormatStringToHandle(location.x - 20, location.y - 25, 0x00ffff, FontHandle, "%d%d", combo10, combo1);
+	}
+	else
+	{
+		DrawFormatStringToHandle(location.x - 10, location.y - 25, 0x00ffff, FontHandle, "%d", combo1);
+	}
+
+	
+	
+	
+	
+
 	//当たり判定用
 	DrawBox(location.x - box_size.x, location.y - box_size.y, 
 		location.x + box_size.x, location.y + box_size.y, 0xffffff, FALSE);
@@ -131,7 +145,6 @@ void Player::Draw()
 	}
 }
 
-
 //終了時処理
 void Player::Finalize()
 {
@@ -145,13 +158,11 @@ Vector2D Player::GetLocation()const
 	return this->location;
 }
 
-
 //当たり判定の大きさ取得処理
 Vector2D Player::GetBoxSize()const
 {
 	return this->box_size;
 }
-
 
 //速さ取得処理
 float Player::GetSpeed()const
