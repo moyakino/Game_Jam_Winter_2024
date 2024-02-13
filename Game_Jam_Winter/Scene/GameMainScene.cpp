@@ -35,6 +35,10 @@ void GameMainScene::Initialize()
     barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
     int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image); //敵の分割読み込み
 
+    //音楽(BGM,SE,MAINSONG)の読み込み
+    main_song_handle = LoadSoundMem("Resource/music/MAINSONG/GameMain_main_song_1.wav");
+    //ChangeVolumeSoundMem(100, main_song_handle);
+
     //エラーチェック 画像が正しく読み込まれているかの確認
     if (back_ground == -1)
     {
@@ -54,6 +58,12 @@ void GameMainScene::Initialize()
         throw("Resource/images/car.bmpがありません\n");
     }
 
+    if (main_song_handle == -1)
+    {
+        //敵用の車の分割読み込み
+        throw("Resource/music/MAINSONG/GameMain_main_song_1.wavがありません\n");
+    }
+
     //オブジェクトの生成 プレイヤーと敵 敵の最大数は10？
     player = new Player;
     enemy = new Enemy * [10];
@@ -71,6 +81,9 @@ void GameMainScene::Initialize()
 //更新処理
 eSceneType GameMainScene::Update()
 {
+    //MAINSONG再生
+    PlaySoundMem(main_song_handle, DX_PLAYTYPE_BACK, FALSE);
+
     //プレイヤーの更新
     player->Update();
 
@@ -165,8 +178,9 @@ void GameMainScene::Draw()const
     //プレイヤーの描画
     player->Draw();
 
-    //UIの描画
+    //UIの描画 DrawBoxで緑の部分描画
     DrawBox(500, 0, WIDTH, HEIGHT, GetColor(0, 153, 0), TRUE);
+
     SetFontSize(16);
     DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
     DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", high_score);
