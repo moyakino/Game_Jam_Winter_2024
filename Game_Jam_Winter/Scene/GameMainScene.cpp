@@ -147,7 +147,7 @@ eSceneType GameMainScene::Update()
             //当たり判定の確認
             if (IsHitCheck(player, enemy[i]))
             {
-                enemy[i]->Finalize();
+                player->SetActive(false);
                 player->DecreaseHp(-50.0f);
                 enemy[i]->Finalize();
                 delete enemy[i];

@@ -6,8 +6,8 @@
 #define HEIGHT 600.0f
 #define TIME 8
 
-Player::Player() :image(NULL), location(0.0f), box_size(0.0f),
-angle(0.0f), speed(0.0f), hp(0.0f), fuel(0.0f)
+Player::Player() :is_active(false), image(NULL), location(0.0f),
+box_size(0.0f), angle(0.0f), speed(0.0f), hp(0.0f), fuel(0.0f)
 {
 
 }
@@ -22,6 +22,7 @@ Player::~Player()
 //初期化処理
 void Player::Initialize()
 {
+	is_active = true;
 	location = Vector2D(190.0f, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 60.0f);
 	speed = 3.0f;
@@ -43,6 +44,18 @@ void Player::Initialize()
 //更新処理
 void Player::Update()
 {
+	//操作不可状態であれば、自身を回転させる
+	if (!is_active)
+	{
+		angle += DX_PI_F / 24.0f;
+		speed = 1.0f;
+		if (angle >= DX_PI_F * 4.0f)
+		{
+			is_active = true;
+		}
+		return;
+	}
+
 	//燃料の消費
 	fuel -= speed;
 
@@ -96,6 +109,12 @@ void Player::Finalize()
 {
 	//読み込んだ画像を削除
 	DeleteGraph(image);
+}
+
+//状態設定処理
+void Player::SetActive(bool flg)
+{
+	this->is_active = flg;
 }
 
 //体力減少処理
