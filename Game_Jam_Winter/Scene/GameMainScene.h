@@ -22,9 +22,8 @@ private:
 	bool ScoreString;	//加算スコアを描画
 	int DrawPlusScoreCount;	//加算したスコアの時間を測るタイマー
 
-	
-
-	int Mae_HappySE;
+	int Mae_HappySE;	 //前津ニキが喜ぶ時のSE
+	int Mae_BadSE;		 //前津ニキが落ち込む時のSE
 
 	Player* player;      //プレイヤー
 	Enemy** enemy;       //敵 ダブルポインタなので配列の先頭のアドレス(場所)を指す

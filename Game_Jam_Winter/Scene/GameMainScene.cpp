@@ -42,6 +42,12 @@ void GameMainScene::Initialize()
 
     //音楽(BGM,SE,MAINSONG)の読み込み
     main_song_handle = LoadSoundMem("Resource/music/BGM/GameMain.wav");
+
+    //前津ニキSE再生
+    Mae_HappySE = LoadSoundMem("Resource/music/SE/maetu_喜ぶ_トリミング.wav");
+
+    Mae_BadSE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
+
     ChangeVolumeSoundMem(50, main_song_handle);
     //ChangeVolumeSoundMem(100, main_song_handle);
 
@@ -156,11 +162,13 @@ eSceneType GameMainScene::Update()
                     score += 10000;
                     player->DecreaseTyokin(-1000.0f);//貯金減らす
                     player->SetIsBike(false);//バイク触れたアニメーション変更
+                    PlaySoundMem(Mae_HappySE, DX_PLAYTYPE_BACK, TRUE);
                     ScoreString = TRUE;
                 }
                 else {
                     player->DecreaseHp(-100.0f);     //体力(心)減らす
                     player->DecreaseTyokin(-2000.0f);//貯金減らす
+                    PlaySoundMem(Mae_BadSE, DX_PLAYTYPE_BACK, TRUE);
                     player->SetIsCar(false); //車触れたアニメーション変更
                 }
                 enemy[i]->Finalize();
