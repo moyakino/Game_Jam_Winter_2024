@@ -153,7 +153,9 @@ eSceneType GameMainScene::Update()
             //当たり判定の確認
             if (IsHitCheck(player, enemy[i]))
             {
-                player->SetActive(false);
+                player->SetIsCar(false); //車触れたアニメーション変更
+                player->SetIsBike(false);//バイク触れたアニメーション変更
+
                 player->DecreaseHp(-100.0f);     //体力(心)減らす
                 player->DecreaseTyokin(-2000.0f);//貯金減らす
                 enemy[i]->Finalize();
