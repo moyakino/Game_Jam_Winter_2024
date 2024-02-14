@@ -19,6 +19,7 @@ private:
 	int Title_Bgm;
 	int cursor_down_se;
 	int cursor_up_se;
+	int mae2_image;
 	
 
 public:

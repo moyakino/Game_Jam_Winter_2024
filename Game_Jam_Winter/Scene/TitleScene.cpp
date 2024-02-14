@@ -3,7 +3,7 @@
 #include "DxLib.h"
 
 TitleScene::TitleScene() :background_image(NULL), /*menu_image(NULL),*/kuruma_image(NULL), state_image(NULL), help_image(NULL), ranking_image(NULL), end_image(NULL),
-cursor_image(NULL), menu_cursor(0), Title_Bgm(0), cursor_down_se(0), cursor_up_se(0), Mae_se(0)
+cursor_image(NULL), mae2_image(NULL), menu_cursor(0), Title_Bgm(0), cursor_down_se(0), cursor_up_se(0), Mae_se(0)
 {
 
 }
@@ -29,6 +29,7 @@ void TitleScene::Initialize()
 	cursor_image = LoadGraph("Resource/images/cone.bmp");
 	cursor_down_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
 	cursor_up_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
+	mae2_image = LoadGraph("Resource/images/Title_img.png");
 	//タイトルBGM
 	Title_Bgm = LoadSoundMem("Resource/music/BGM/Title_and_help_bgm.wav");
 	//音声ファイルのボリュームを変更できる 0:無音 255:最大音量
@@ -42,6 +43,8 @@ void TitleScene::Initialize()
 	{
 		throw("Resource/images/Title.bmpがありません\n");
 	}
+
+
 
 	if (state_image == -1)
 	{
@@ -148,7 +151,10 @@ void TitleScene::Draw()const
 
 	DrawGraph(210, 280, help_image, TRUE);
 
-	DrawGraph(210, 320, end_image, TRUE);
+	DrawGraph(200, 320, end_image, TRUE);
+
+	DrawGraph(80, 40, mae2_image, TRUE);
+
 
 	//カーソル画像の描画
 	DrawRotaGraph(180, 220 + menu_cursor * 40, 0.7, DX_PI / 2.0, cursor_image, TRUE);
@@ -167,6 +173,7 @@ void TitleScene::Finalize()
 	DeleteGraph(ranking_image);
 	DeleteGraph(help_image);
 	DeleteGraph(end_image);
+	DeleteGraph(mae2_image);
 	//DeleteSoundMem(Mae_se);
 }
 
