@@ -12,8 +12,8 @@ private:
 	Vector2D box_size;  //当たり判定の大きさ
 	float angle;        //角度
 	float speed;        //速さ
-	float hp;           //体力
-	float fuel;         //燃料
+	float hp;           //体力(心)
+	float tyokin;       //貯金
 	int keyCount;       //入力クールタイム
 
 public:
@@ -27,11 +27,12 @@ public:
 
 public:
 	void SetActive(bool flg);        //有効フラグ設定
-	void DecreaseHp(float value);    //体力減少処理
+	void DecreaseHp(float value);    //体力(心)減少処理
+	void DecreaseTyokin(float value);//貯金減少処理
 	Vector2D GetLocation()const;     //位置座標取得
 	Vector2D GetBoxSize()const;      //当たり判定の大きさ取得
 	float GetSpeed()const;           //速さ取得処理
-	float GetFuel()const;            //燃料取得
+	float GetTyokin()const;           //貯金取得
 	float GetHp()const;              //体力取得
 private:
 	void Movement();                 //移動処理

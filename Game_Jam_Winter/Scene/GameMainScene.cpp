@@ -5,6 +5,8 @@
 
 #define WIDTH 640
 #define HEIGHT 600
+#define MAXHP 1000
+#define MAXTYOKIN 20000
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
 barrier_image(NULL),
@@ -148,19 +150,14 @@ eSceneType GameMainScene::Update()
             if (IsHitCheck(player, enemy[i]))
             {
                 player->SetActive(false);
-                player->DecreaseHp(-50.0f);
+                player->DecreaseHp(-100.0f);     //体力(心)減らす
+                player->DecreaseTyokin(-2000.0f);//貯金減らす
                 enemy[i]->Finalize();
                 delete enemy[i];
                 enemy[i] = nullptr;
             }
         }
     }
-
-    //プレイヤーの燃料化体力が０未満なら、リザルトに遷移する
-    /*if (player->GetFuel() < 0.0f || player->GetHp() < 0.0f)
-    {
-        return eSceneType::E_RESULT;
-    }*/
 
     if (main_song_fps > 59) {
         main_song_fps = 0;
@@ -214,22 +211,22 @@ void GameMainScene::Draw()const
     DrawFormatString(510, 240, GetColor(0, 0, 0), "スピード");
     DrawFormatString(555, 260, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());
 
-    //燃料ゲージの描画
+    //体力(心)ゲージの描画
     float fx = 510.0f;
     float fy = 390.0f;
-    DrawFormatString(fx, fy, GetColor(0, 0, 0), "FUEL METER");
-    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetFuel() * 100 / 20000), fy + 40.0f,
-        GetColor(0, 102, 204), TRUE);
-    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
-
-    //体力ゲージの描画
-    fx = 510.0f;
-    fy = 430.0f;
-    DrawFormatString(fx, fy, GetColor(0, 0, 0), "PLAYER HP");
-    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / 1000), fy + 40.0f,
+    DrawFormatString(fx, fy, GetColor(0, 0, 0), "心ゲージ");
+    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / MAXHP), fy + 40.0f,
         GetColor(255, 0, 0), TRUE);
     DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0),
         FALSE);
+
+    //貯金ゲージの描画
+    fx = 510.0f;
+    fy = 450.0f;
+    DrawFormatString(fx, fy, GetColor(0, 0, 0), "貯金額");
+    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,
+        GetColor(0, 102, 204), TRUE);
+    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
 }
 
 
