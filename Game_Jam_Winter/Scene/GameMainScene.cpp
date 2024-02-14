@@ -99,7 +99,7 @@ eSceneType GameMainScene::Update()
     mileage += (int)player->GetSpeed() + 5;
 
     //敵生成処理 間隔で決めている
-    if (enemy_create_span % 180 == 0)
+    if (enemy_create_span % 75 == 0)
     {
         
         // i < 10 の 10は敵の最大数
@@ -154,15 +154,14 @@ eSceneType GameMainScene::Update()
             {
                 if (enemy[i]->GetType() == 3) {
                     score += 10000;
-                    player->DecreaseTyokin(-2000.0f);//貯金減らす
+                    player->DecreaseTyokin(-1000.0f);//貯金減らす
+                    player->SetIsBike(false);//バイク触れたアニメーション変更
                 }
                 else {
                     player->DecreaseHp(-100.0f);     //体力(心)減らす
                     player->DecreaseTyokin(-2000.0f);//貯金減らす
+                    player->SetIsCar(false); //車触れたアニメーション変更
                 }
-
-                //player->SetIsCar(false); //車触れたアニメーション変更
-                player->SetIsBike(false);//バイク触れたアニメーション変更
                 enemy[i]->Finalize();
                 delete enemy[i];
                 enemy[i] = nullptr;

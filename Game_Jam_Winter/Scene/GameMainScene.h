@@ -19,6 +19,7 @@ private:
 	int enemy_create_span;	//敵の生成スパンの計測
 	int main_song_handle;//ゲームメインで流れるメインの曲用変数
 
+	int Mae_HappySE;
 
 	Player* player;      //プレイヤー
 	Enemy** enemy;       //敵 ダブルポインタなので配列の先頭のアドレス(場所)を指す
