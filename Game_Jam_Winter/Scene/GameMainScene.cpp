@@ -13,7 +13,7 @@ barrier_image(NULL), main_song_handle(0), player(nullptr),
 enemy(nullptr)
 {
     //敵画像及び敵のカウント配列の初期化
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
     {
         enemy_image[i] = NULL;
         enemy_count[i] = NULL;
@@ -38,7 +38,7 @@ void GameMainScene::Initialize()
     //画像の読み込み
     back_ground = LoadGraph("Resource/images/back01.bmp"); //背景画像(道路の画像)の読み込み
     barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
-    int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image); //敵の分割読み込み
+    int result = LoadDivGraph("Resource/images/enemy.png", 4, 4, 1, 63, 120, enemy_image); //敵の分割読み込み
 
     //音楽(BGM,SE,MAINSONG)の読み込み
     main_song_handle = LoadSoundMem("Resource/music/BGM/GameMain.wav");
@@ -98,8 +98,8 @@ eSceneType GameMainScene::Update()
     //移動距離の更新　生成が下の部分だとスピードが上手く増えていかないための微調整で足している
     mileage += (int)player->GetSpeed() + 5;
 
-    //敵生成処理 間隔で決めている
-    if (enemy_create_span % 180 == 0)
+    //敵生成処理 間隔で決めている 75
+    if (enemy_create_span % 32 == 0)
     {
         
         // i < 10 の 10は敵の最大数
@@ -108,7 +108,7 @@ eSceneType GameMainScene::Update()
             //敵の添え字の敵が生成されていないなら生成する
             if (enemy[i] == nullptr)
             {
-                int type = GetRand(3) % 3;
+                int type = GetRand(4) % 4;
 
                 //乱数 0：黄色　１：青色　２：赤色
                 //int type = GetRand(1);
@@ -152,17 +152,16 @@ eSceneType GameMainScene::Update()
             //当たり判定の確認
             if (IsHitCheck(player, enemy[i]))
             {
-                if (enemy[i]->GetType() == 0) {
+                if (enemy[i]->GetType() == 3) {
                     score += 10000;
-                    player->DecreaseTyokin(-2000.0f);//貯金減らす
+                    player->DecreaseTyokin(-1000.0f);//貯金減らす
+                    player->SetIsBike(false);//バイク触れたアニメーション変更
                 }
                 else {
                     player->DecreaseHp(-100.0f);     //体力(心)減らす
                     player->DecreaseTyokin(-2000.0f);//貯金減らす
+                    player->SetIsCar(false); //車触れたアニメーション変更
                 }
-
-                //player->SetIsCar(false); //車触れたアニメーション変更
-                player->SetIsBike(false);//バイク触れたアニメーション変更
                 enemy[i]->Finalize();
                 delete enemy[i];
                 enemy[i] = nullptr;
@@ -176,10 +175,12 @@ eSceneType GameMainScene::Update()
     //    return eSceneType::E_RANKING_INPUT;
     //}
 
-    if (player->GetHp() < 0 || player->GetTyokin() < 0) {
+    if (player->GetHp() <= 0 || player->GetTyokin() <= 0) {
 
         return eSceneType::E_RESULT;
+
     }
+
     return GetNowScene();
 }
 

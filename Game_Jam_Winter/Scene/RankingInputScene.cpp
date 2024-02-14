@@ -26,6 +26,10 @@ void RankingInputScene::Initialize()
     //エラーメッセージを出すかどうか
     error_message = FALSE;
 
+    //前津ニキSE再生
+    Mae_DecitionSE = LoadSoundMem("Resource/music/SE/maetu_決定_トリミング.wav");
+
+    Mae_ExitSE = LoadSoundMem("Resource/music/SE/maetu_戻る_トリミング.wav");
 
     //エラーチェック
     if (backgrouond_image == -1)
@@ -244,15 +248,18 @@ bool RankingInputScene::InputName()
             {
                 if (name_num < 1) {
                     error_message = TRUE;
+                    PlaySoundMem(Mae_DecitionSE, DX_PLAYTYPE_BACK, TRUE);
                     return false;
                 }
                 else {
                     name[name_num] = '\0';
+                    PlaySoundMem(Mae_DecitionSE, DX_PLAYTYPE_BACK, TRUE);
                     return true;
                 }
             }
             else
             {
+                PlaySoundMem(Mae_ExitSE, DX_PLAYTYPE_BACK, TRUE);
                 name[--name_num] = NULL;
             }
         }
@@ -260,6 +267,7 @@ bool RankingInputScene::InputName()
 
     if (InputControl::GetButtonDown(XINPUT_BUTTON_B)) {
         name[--name_num] = NULL;
+        PlaySoundMem(Mae_ExitSE, DX_PLAYTYPE_BACK, TRUE);
     }
 
     if (name_num < 0) {
