@@ -23,6 +23,10 @@ void RankingInputScene::Initialize()
     //画像の読み込み
     backgrouond_image = LoadGraph("Resource/images/Ranking.bmp");
 
+    //エラーメッセージを出すかどうか
+    error_message = FALSE;
+
+
     //エラーチェック
     if (backgrouond_image == -1)
     {
@@ -80,26 +84,31 @@ void RankingInputScene::Draw()const
     DrawGraph(0, 0, backgrouond_image, TRUE);
 
     //名前入力指示文字列の描画
-    DrawString(150, 100, "ランキングに登録します", 0xffffff);
-    DrawFormatString(100, 220, GetColor(255, 255, 255), ">%s", name);
+    DrawString(230, 100, "ランキングに登録します", 0xffffff);
+    DrawFormatString(250, 220, GetColor(255, 255, 255), ">%s", name);
 
     //選択用文字を描画
     const int font_size = 25;
     for (int i = 0; i < 26; i++)
     {
-        int x = (i % 13) * font_size + 15;
+        int x = (i % 13) * font_size + 165;
         int y = (i / 13) * font_size + 300;
         DrawFormatString(x, y, GetColor(255, 255, 255), "%-3c", 'a' + i);
         y = ((i / 13) + 2) * font_size + 300;
         DrawFormatString(x, y, GetColor(255, 255, 255), "%-3c", 'A' + i);
     }
-    DrawString(40, 405, "決定", GetColor(255, 255, 255));
-    DrawString(40 + font_size * 2, 405, "消す", GetColor(255, 255, 255));
+    DrawString(190, 405, "決定", GetColor(255, 255, 255));
+    DrawString(190 + font_size * 2, 405, "消す", GetColor(255, 255, 255));
+
+
+    if (error_message == true) {
+        DrawString(225, 505, "名前を入力してください", GetColor(255, 0, 0));
+    }
 
     //選択文字をフォーカスする
     if (cursor_y < 4)
     {
-        int x = cursor_x * font_size + 10;
+        int x = cursor_x * font_size + 160;
         int y = cursor_y * font_size + 295;
         DrawBox(x, y, x + font_size, y + font_size, GetColor(255, 255, 255), FALSE);
     }
@@ -107,11 +116,11 @@ void RankingInputScene::Draw()const
     {
         if (cursor_x == 0)
         {
-            DrawBox(35, 400, 35 + font_size * 2, 400 + font_size, GetColor(255, 255, 255), FALSE);
+            DrawBox(185, 400, 185 + font_size * 2, 400 + font_size, GetColor(255, 255, 255), FALSE);
         }
         else
         {
-            DrawBox(80, 400, 80 + font_size * 2, 400 + font_size, GetColor(255, 255, 255), FALSE);
+            DrawBox(230, 400, 230 + font_size * 2, 400 + font_size, GetColor(255, 255, 255), FALSE);
         }
     }
 }
@@ -209,7 +218,7 @@ bool RankingInputScene::InputName()
     }
 
     //カーソル位置の文字を決定する
-    if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
+    if (InputControl::GetButtonDown(XINPUT_BUTTON_A))
     {
         if (cursor_y < 2)
         {
@@ -233,14 +242,24 @@ bool RankingInputScene::InputName()
         {
             if (cursor_x == 0)
             {
-                name[name_num] = '\0';
-                return true;
+                if (name_num < 1) {
+                    error_message = TRUE;
+                    return false;
+                }
+                else {
+                    name[name_num] = '\0';
+                    return true;
+                }
             }
             else
             {
                 name[--name_num] = NULL;
             }
         }
+    }
+
+    if (InputControl::GetButtonDown(XINPUT_BUTTON_B)) {
+        name[--name_num] = NULL;
     }
 
     return false;

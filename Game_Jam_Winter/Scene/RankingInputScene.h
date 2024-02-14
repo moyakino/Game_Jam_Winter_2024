@@ -11,6 +11,7 @@ private:
 	RankingData* ranking;    //ランキング情報
 	int score;               //スコア
 	char name[15];           //名前
+	bool error_message;		 //エラーメッセージ
 	int name_num;            //名前入力数
 	int cursor_x;            //カーソルx座標
 	int cursor_y;            //カーソルy座標

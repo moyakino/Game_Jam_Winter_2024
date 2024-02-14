@@ -36,7 +36,13 @@ void RankingDispScene::Initialize()
 //更新処理
 eSceneType RankingDispScene::Update()
 {
-	//Bボタンが押されたら、タイトルに戻る
+	//Aボタンが押されたら、タイトルに戻る
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_A))
+	{
+		return eSceneType::E_TITLE;
+	}
+
+	//Bボタンが押されても、タイトルに戻る
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
 		return eSceneType::E_TITLE;
@@ -52,12 +58,33 @@ void RankingDispScene::Draw()const
 	//背景画像の描画
 	DrawGraph(0, 0, background_image, FALSE);
 
+	SetFontSize(30);
+
 	//取得したランキングデータを描画する
 	for (int i = 0; i < 5; i++)
 	{
-		DrawFormatString(50, 170 + i * 25, 0xffffff, "%2d %-15s %6d",
-			ranking->GetRank(i), ranking->GetName(i), ranking->GetScore(i));
+		switch (i)
+		{
+		case 0:
+			DrawFormatString(110, 170 + i * 70, 0xe6b422, "%2d %-15s %6d",
+				ranking->GetRank(i), ranking->GetName(i), ranking->GetScore(i));
+			break;
+		case 1:
+			DrawFormatString(110, 170 + i * 70, 0x808080, "%2d %-15s %6d",
+				ranking->GetRank(i), ranking->GetName(i), ranking->GetScore(i));
+			break;
+		case 2:
+			DrawFormatString(110, 170 + i * 70, 0x8c4841, "%2d %-15s %6d",
+				ranking->GetRank(i), ranking->GetName(i), ranking->GetScore(i));
+			break;
+		default:
+			DrawFormatString(110, 170 + i * 70, 0xffffff, "%2d %-15s %6d",
+				ranking->GetRank(i), ranking->GetName(i), ranking->GetScore(i));
+			break;
+		}
 	}
+
+
 }
 
 
