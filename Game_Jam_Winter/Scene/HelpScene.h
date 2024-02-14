@@ -7,6 +7,7 @@ class HelpScene :public SceneBase
 private:
 	int background_image; //背景画像
 	int  Help_song_handle; //タイトルに戻る時のSE
+	int Kuruma_image;
 
 public:
 	HelpScene();
