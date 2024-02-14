@@ -31,9 +31,9 @@ void TitleScene::Initialize()
 	cursor_up_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
 	mae2_image = LoadGraph("Resource/images/Title_img.png");
 	//タイトルBGM
-	Title_Bgm = LoadSoundMem("Resource/music/BGM/Title_and_help_bgm.wav");
+	Title_Bgm = LoadSoundMem("Resource/music/BGM/Title.wav");
 	//音声ファイルのボリュームを変更できる 0:無音 255:最大音量
-	ChangeVolumeSoundMem(0, Title_Bgm);
+	ChangeVolumeSoundMem(50, Title_Bgm);
 
 	//前津ニキSE再生
 	Mae_se = LoadSoundMem("Resource/music/SE/maetu_決定_トリミング.wav");

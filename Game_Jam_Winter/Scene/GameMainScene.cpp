@@ -41,7 +41,7 @@ void GameMainScene::Initialize()
     int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image); //敵の分割読み込み
 
     //音楽(BGM,SE,MAINSONG)の読み込み
-    main_song_handle = LoadSoundMem("Resource/music/MAINSONG/GameMain_main_song_1.wav");
+    main_song_handle = LoadSoundMem("Resource/music/BGM/GameMain.wav");
     ChangeVolumeSoundMem(50, main_song_handle);
     //ChangeVolumeSoundMem(100, main_song_handle);
 
