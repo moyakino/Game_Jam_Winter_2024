@@ -46,4 +46,3 @@ private:
 	//当たり判定
 	bool IsHitCheck(Player* p, Enemy* e);
 };
-
