@@ -16,7 +16,6 @@ private:
 	int end_image;
 	int cursor_image;
 	int menu_cursor;
-	int Title_Bgm;
 	int cursor_down_se;
 	int cursor_up_se;
 	int mae2_image;
