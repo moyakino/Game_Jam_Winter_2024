@@ -14,7 +14,7 @@ mileage(0), main_song_handle(0), player(nullptr),
 enemy(nullptr)
 {
     //敵画像及び敵のカウント配列の初期化
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
     {
         enemy_image[i] = NULL;
         enemy_count[i] = NULL;
@@ -39,7 +39,7 @@ void GameMainScene::Initialize()
     //画像の読み込み
     back_ground = LoadGraph("Resource/images/back01.bmp"); //背景画像(道路の画像)の読み込み
     barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
-    int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image); //敵の分割読み込み
+    int result = LoadDivGraph("Resource/images/enemy.png", 4, 4, 1, 63, 120, enemy_image); //敵の分割読み込み
 
     //音楽(BGM,SE,MAINSONG)の読み込み
     main_song_handle = LoadSoundMem("Resource/music/MAINSONG/GameMain_main_song_1.wav");
@@ -113,7 +113,7 @@ eSceneType GameMainScene::Update()
             //敵の添え字の敵が生成されていないなら生成する
             if (enemy[i] == nullptr)
             {
-                int type = GetRand(3) % 3;
+                int type = GetRand(4) % 4;
 
                 //乱数 0：黄色　１：青色　２：赤色
                 //int type = GetRand(1);
@@ -157,7 +157,7 @@ eSceneType GameMainScene::Update()
             //当たり判定の確認
             if (IsHitCheck(player, enemy[i]))
             {
-                if (enemy[i]->GetType() == 0) {
+                if (enemy[i]->GetType() == 3) {
                     score += 10000;
                     player->DecreaseTyokin(-2000.0f);//貯金減らす
                 }
@@ -185,10 +185,12 @@ eSceneType GameMainScene::Update()
         main_song_count++;
     }
 
-    if (player->GetHp() < 0 || player->GetTyokin() < 0) {
+    if (player->GetHp() <= 0 || player->GetTyokin() <= 0) {
 
         return eSceneType::E_RESULT;
+
     }
+
     return GetNowScene();
 }
 
