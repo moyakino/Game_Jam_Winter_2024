@@ -34,7 +34,7 @@ void RankingData::Initialize()
 	//エラーチェック
 	if (result != 0)
 	{
-		throw("Resource/dat/ranking_data.scvが開けませんでした\n");
+		throw("Resource/dat/ranking_data.csvが開けませんでした\n");
 	}
 
 	//対象ファイルから読み込む
