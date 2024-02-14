@@ -21,7 +21,7 @@ void TitleScene::Initialize()
 {
 	SetBackgroundColor(50, 50, 50, 0);
 	//画像の読み込み
-	kuruma_image = LoadGraph("Resource/images/kuruma1.bmp");
+	kuruma_image = LoadGraph("Resource/images/Baiku22.bmp");
 	state_image = LoadGraph("Resource/images/start_m.bmp");
 	ranking_image = LoadGraph("Resource/images/ranking_m.bmp");
 	help_image = LoadGraph("Resource/images/help_m.bmp");
@@ -135,7 +135,7 @@ void TitleScene::Draw()const
 	//メニュー画像の描画
 	/*DrawGraph(120, 200, menu_image, TRUE);*/
 
-	DrawGraph(140, 400, kuruma_image, TRUE);
+	DrawGraph(0, 260, kuruma_image, TRUE);
 
 	DrawGraph(210, 200, state_image,TRUE);
 
