@@ -21,7 +21,7 @@ void HelpScene::Initialize()
 	/*background_image = LoadGraph("Resource/images/Title.bmp");*/
 	SetBackgroundColor(50, 50, 50, 0);
 	//タイトルに戻る時のSE読み込み
-	Help_song_handle = LoadSoundMem("Resource/music/SE/Title_kettei_se.wav");
+	Help_song_handle = LoadSoundMem("Resource/music/SE/maetu_戻る_トリミング.wav");
 
 	//エラーチェック
 	if (background_image == -1)
