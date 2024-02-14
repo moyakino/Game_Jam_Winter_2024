@@ -17,6 +17,10 @@ private:
 	int cursor_y;            //カーソルy座標
 
 public:
+	int Mae_DecitionSE;		 //前津ニキ決定SE
+
+	int Mae_ExitSE;			 //前津ニキ戻るSE	
+
 	RankingInputScene();
 	virtual ~RankingInputScene();
 

@@ -14,11 +14,12 @@ private:
 	int barrier_image;   //バリア映像
 	int mileage;         //走行距離
 	int score;			 //スコア
-	int enemy_image[3];  //敵画像
-	int enemy_count[3];  //通り過ぎた敵カウント
+	int enemy_image[4];  //敵画像
+	int enemy_count[4];  //通り過ぎた敵カウント
 	int enemy_create_span;	//敵の生成スパンの計測
 	int main_song_handle;//ゲームメインで流れるメインの曲用変数
 
+	int Mae_HappySE;
 
 	Player* player;      //プレイヤー
 	Enemy** enemy;       //敵 ダブルポインタなので配列の先頭のアドレス(場所)を指す
