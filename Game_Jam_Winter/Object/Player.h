@@ -14,6 +14,7 @@ private:
 	float speed;        //速さ
 	float hp;           //体力(心)
 	float tyokin;       //貯金
+	int missCount;      //被弾クールタイム
 	int keyCount;       //入力クールタイム
 
 public:
