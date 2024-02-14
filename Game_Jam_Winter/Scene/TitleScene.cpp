@@ -34,8 +34,8 @@ void TitleScene::Initialize()
 	//音声ファイルのボリュームを変更できる 0:無音 255:最大音量
 	ChangeVolumeSoundMem(50, Title_Bgm);
 
-	//前津ニキSE再生
-	Mae_se = LoadSoundMem("Resource/music/SE/2bfe568d1f530c6f .m4a");
+	//前津ニキ決定ボイス再生
+	Mae_se = LoadSoundMem("Resource/music/SE/maetu_決定_トリミング.wav");
 
 	//エラーチェック
 	if (background_image == -1)
