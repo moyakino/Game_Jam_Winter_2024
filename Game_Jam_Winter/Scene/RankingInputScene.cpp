@@ -262,5 +262,9 @@ bool RankingInputScene::InputName()
         name[--name_num] = NULL;
     }
 
+    if (name_num < 0) {
+        name_num = 0;
+    }
+
     return false;
 }

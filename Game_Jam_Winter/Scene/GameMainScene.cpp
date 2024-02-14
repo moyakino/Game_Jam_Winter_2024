@@ -85,6 +85,8 @@ eSceneType GameMainScene::Update()
 {
     main_song_fps++;
 
+    enemy_create_span++;
+
     //MAINSONG再生
     PlaySoundMem(main_song_handle, DX_PLAYTYPE_BACK, FALSE);
 
@@ -95,29 +97,30 @@ eSceneType GameMainScene::Update()
     mileage += (int)player->GetSpeed() + 5;
 
     //テスト
-    Test_mileage = mileage / 20 % 100;
+    Test_mileage = mileage / 20 % 60;
 
     //敵生成処理 間隔で決めている
-    if (mileage / 20 % 100 == 0)
+    if (enemy_create_span % 180 == 0)
     {
         
         // i < 10 の 10は敵の最大数
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 4; i++)
         {
             //敵の添え字の敵が生成されていないなら生成する
             if (enemy[i] == nullptr)
             {
-                //int type = GetRand(3) % 3;
+                int type = GetRand(3) % 3;
 
                 //乱数 0：黄色　１：青色　２：赤色
                 //int type = GetRand(1);
 
-                int type = 0;
                 enemy[i] = new Enemy(type, enemy_image[type]);
                 enemy[i]->Initialize();
                 break;
             }
         }
+
+        enemy_create_span = 0;
     }
 
     //敵の更新と当たり判定チェック
@@ -149,9 +152,15 @@ eSceneType GameMainScene::Update()
             //当たり判定の確認
             if (IsHitCheck(player, enemy[i]))
             {
+                if (enemy[i]->GetType() == 0) {
+                    score += 10000;
+                    player->DecreaseTyokin(-2000.0f);//貯金減らす
+                }
+                else {
+                    player->DecreaseHp(-100.0f);     //体力(心)減らす
+                    player->DecreaseTyokin(-2000.0f);//貯金減らす
+                }
                 player->SetActive(false);
-                player->DecreaseHp(-100.0f);     //体力(心)減らす
-                player->DecreaseTyokin(-2000.0f);//貯金減らす
                 enemy[i]->Finalize();
                 delete enemy[i];
                 enemy[i] = nullptr;
@@ -164,6 +173,10 @@ eSceneType GameMainScene::Update()
         main_song_count++;
     }
 
+    if (player->GetHp() < 0 || player->GetTyokin() < 0) {
+
+        return eSceneType::E_RESULT;
+    }
     return GetNowScene();
 }
 
@@ -211,6 +224,8 @@ void GameMainScene::Draw()const
     DrawFormatString(510, 240, GetColor(0, 0, 0), "スピード");
     DrawFormatString(555, 260, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());
 
+    DrawFormatString(555, 360, GetColor(255, 255, 255), "スコア\n%06d", score);
+
     //体力(心)ゲージの描画
     float fx = 510.0f;
     float fy = 390.0f;
@@ -233,12 +248,11 @@ void GameMainScene::Draw()const
 //終了時処理
 void GameMainScene::Finalize()
 {
-    //スコアを計算する
-    int score = (mileage / 10 * 10);
+    /*score = (mileage / 10 * 10);
     for (int i = 0; i < 3; i++)
     {
         score += (i + 1) * 50 * enemy_count[i];
-    }
+    }*/
 
     //リザルトデータの書き込み
     FILE* fp = nullptr;
