@@ -163,6 +163,13 @@ eSceneType GameMainScene::Update()
         }
     }
 
+    ////前津ニキの体力(心)か貯金が０未満なら、遷移する
+    //if (player->GetHp() < 0.0f || player->GetTyokin() < 0.0f)
+    //{
+    //    return eSceneType::E_RANKING_INPUT;
+    //}
+
+
     if (main_song_fps > 59) {
         main_song_fps = 0;
         main_song_count++;
