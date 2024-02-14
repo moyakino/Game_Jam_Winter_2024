@@ -9,11 +9,6 @@ class GameMainScene :public SceneBase
 {
 private:
 
-	//テスト用
-	float main_song_fps = 0.0f;
-	int main_song_count = 0;
-	int Test_mileage = 0;
-
 	int high_score;      //ハイスコア
 	int back_ground;     //背景画像
 	int barrier_image;   //バリア映像
@@ -26,7 +21,7 @@ private:
 
 
 	Player* player;      //プレイヤー
-	Enemy** enemy;       //敵 ダブルポインタなので配列のだったら配列の先頭のアドレス(場所)を指す
+	Enemy** enemy;       //敵 ダブルポインタなので配列の先頭のアドレス(場所)を指す
 	TitleScene* title;
 
 public:

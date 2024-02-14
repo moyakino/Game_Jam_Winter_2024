@@ -9,8 +9,7 @@
 #define MAXTYOKIN 20000
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
-barrier_image(NULL),
-mileage(0), main_song_handle(0), player(nullptr),
+barrier_image(NULL), main_song_handle(0), player(nullptr),
 enemy(nullptr)
 {
     //敵画像及び敵のカウント配列の初期化
@@ -43,6 +42,7 @@ void GameMainScene::Initialize()
 
     //音楽(BGM,SE,MAINSONG)の読み込み
     main_song_handle = LoadSoundMem("Resource/music/MAINSONG/GameMain_main_song_1.wav");
+    ChangeVolumeSoundMem(50, main_song_handle);
     //ChangeVolumeSoundMem(100, main_song_handle);
 
     //エラーチェック 画像が正しく読み込まれているかの確認
@@ -87,8 +87,6 @@ void GameMainScene::Initialize()
 //更新処理
 eSceneType GameMainScene::Update()
 {
-    main_song_fps++;
-
     enemy_create_span++;
 
     //MAINSONG再生
@@ -99,9 +97,6 @@ eSceneType GameMainScene::Update()
 
     //移動距離の更新　生成が下の部分だとスピードが上手く増えていかないための微調整で足している
     mileage += (int)player->GetSpeed() + 5;
-
-    //テスト
-    Test_mileage = mileage / 20 % 60;
 
     //敵生成処理 間隔で決めている
     if (enemy_create_span % 180 == 0)
@@ -179,12 +174,6 @@ eSceneType GameMainScene::Update()
     //    return eSceneType::E_RANKING_INPUT;
     //}
 
-
-    if (main_song_fps > 59) {
-        main_song_fps = 0;
-        main_song_count++;
-    }
-
     if (player->GetHp() < 0 || player->GetTyokin() < 0) {
 
         return eSceneType::E_RESULT;
@@ -213,11 +202,6 @@ void GameMainScene::Draw()const
 
     //プレイヤーの描画
     player->Draw();
-
-    //テスト用
-    DrawFormatString(0, 20, GetColor(255, 255, 255), "%0.1ffps %d秒", main_song_fps, main_song_count);
-    DrawFormatString(0, 40, GetColor(255, 255, 255), "%d:mileage", Test_mileage);
-
 
     //UIの描画 DrawBoxで緑の部分描画
     DrawBox(500, 0, WIDTH, HEIGHT, GetColor(0, 153, 0), TRUE);

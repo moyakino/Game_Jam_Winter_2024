@@ -32,7 +32,7 @@ void TitleScene::Initialize()
 	//タイトルBGM
 	Title_Bgm = LoadSoundMem("Resource/music/BGM/Title_and_help_bgm.wav");
 	//音声ファイルのボリュームを変更できる 0:無音 255:最大音量
-	ChangeVolumeSoundMem(50, Title_Bgm);
+	ChangeVolumeSoundMem(0, Title_Bgm);
 
 	//前津ニキSE再生
 	Mae_se = LoadSoundMem("Resource/music/SE/maetu_決定_トリミング.wav");
@@ -119,6 +119,7 @@ eSceneType TitleScene::Update()
 			return eSceneType::E_HELP;
 
 		case 3:
+			StopSoundMem(Mae_se);
 			return eSceneType::E_END;
 		}
 	}
