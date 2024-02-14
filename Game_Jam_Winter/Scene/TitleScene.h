@@ -19,9 +19,12 @@ private:
 	int Title_Bgm;
 	int cursor_down_se;
 	int cursor_up_se;
-	int Mae_se;
+	
 
 public:
+
+	int Mae_se;
+
 	TitleScene();
 	virtual ~TitleScene();
 

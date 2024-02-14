@@ -3,6 +3,7 @@
 #include "SceneBase.h"
 #include "../Object/Player.h"
 #include "../Object/Enemy.h"
+#include "../Scene/TitleScene.h"
 
 class GameMainScene :public SceneBase
 {
@@ -25,6 +26,7 @@ private:
 
 	Player* player;      //プレイヤー
 	Enemy** enemy;       //敵 ダブルポインタなので配列のだったら配列の先頭のアドレス(場所)を指す
+	TitleScene* title;
 
 public:
 	GameMainScene();

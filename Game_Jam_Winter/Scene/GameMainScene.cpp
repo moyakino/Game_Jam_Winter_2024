@@ -19,11 +19,15 @@ enemy(nullptr)
         enemy_image[i] = NULL;
         enemy_count[i] = NULL;
     }
+
+    title = new TitleScene;
+
 }
 
 GameMainScene::~GameMainScene()
 {
     DeleteSoundMem(main_song_handle);
+    DeleteSoundMem(title->Title_SE());
 }
 
 //初期化処理
@@ -107,12 +111,12 @@ eSceneType GameMainScene::Update()
             //敵の添え字の敵が生成されていないなら生成する
             if (enemy[i] == nullptr)
             {
-                //int type = GetRand(3) % 3;
+                int type = GetRand(3) % 3;
 
                 //乱数 0：黄色　１：青色　２：赤色
                 //int type = GetRand(1);
 
-                int type = 0;
+                //int type = 0;
                 enemy[i] = new Enemy(type, enemy_image[type]);
                 enemy[i]->Initialize();
                 break;
