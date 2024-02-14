@@ -122,7 +122,7 @@ void RankingData::SortData()
 	{
 		for (int j = i + 1; j < 6; j++)
 		{
-			if (score[i] > score[j])
+			if (score[i] >= score[j])
 			{
 				rank[j]++;
 			}
