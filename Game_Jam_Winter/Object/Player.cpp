@@ -8,7 +8,7 @@
 
 #define MAXHP 1000
 #define MAXTYOKIN 20000
-#define MAETUTIME 60
+#define MAETUTIME 15
 
 Player::Player() :is_car(false), is_bike(false), image(NULL), nowMaetu(0),
 location(0.0f), box_size(0.0f), angle(0.0f),
