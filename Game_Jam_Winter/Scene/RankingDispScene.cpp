@@ -84,7 +84,6 @@ void RankingDispScene::Draw()const
 		}
 	}
 
-
 }
 
 
