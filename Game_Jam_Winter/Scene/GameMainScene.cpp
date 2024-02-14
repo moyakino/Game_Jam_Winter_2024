@@ -98,8 +98,8 @@ eSceneType GameMainScene::Update()
     //移動距離の更新　生成が下の部分だとスピードが上手く増えていかないための微調整で足している
     mileage += (int)player->GetSpeed() + 5;
 
-    //敵生成処理 間隔で決めている
-    if (enemy_create_span % 75 == 0)
+    //敵生成処理 間隔で決めている 75
+    if (enemy_create_span % 32 == 0)
     {
         
         // i < 10 の 10は敵の最大数
