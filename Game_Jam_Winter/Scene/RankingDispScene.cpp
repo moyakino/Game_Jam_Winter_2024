@@ -25,6 +25,9 @@ void RankingDispScene::Initialize()
 		throw("Resource/images/Ranking.bmpがありません\n");
 	}
 
+	//SE取得
+
+
 	//ランキング情報を取得
 	ranking = new RankingData;
 	ranking->Initialize();

@@ -9,9 +9,7 @@ private:
 private:
 
 	int background_image;
-	/*int menu_image;*/
 	int kuruma_image;
-	/*int menu_image;*/
 	int state_image;
 	int help_image;
 	int ranking_image;
@@ -21,10 +19,13 @@ private:
 	int Title_Bgm;
 	int cursor_down_se;
 	int cursor_up_se;
+	int Mae_se;
 
 public:
 	TitleScene();
 	virtual ~TitleScene();
+
+	int Title_SE();
 
 	virtual void  Initialize() override;
 	virtual eSceneType Update() override;
