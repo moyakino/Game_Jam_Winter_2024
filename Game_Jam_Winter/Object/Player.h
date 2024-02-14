@@ -6,7 +6,8 @@
 class Player
 {
 private:
-	bool is_active;     //有効常態か？
+	bool is_car;        //車か？
+	bool is_bike;       //バイクか？
 	int image;          //画像データ
 	int maetu[3];
 	int nowMaetu;
@@ -30,7 +31,8 @@ public:
 	void Finalize();     //終了時処理
 
 public:
-	void SetActive(bool flg);        //有効フラグ設定
+	void SetIsCar(bool flg);        //車フラグ設定
+	void SetIsBike(bool flg);       //バイクフラグ設定
 	void DecreaseHp(float value);    //体力(心)減少処理
 	void DecreaseTyokin(float value);//貯金減少処理
 	Vector2D GetLocation()const;     //位置座標取得

@@ -10,8 +10,8 @@
 #define MAXTYOKIN 20000
 #define MAETUTIME 60
 
-Player::Player() :is_active(false), image(NULL), nowMaetu(0), 
-location(0.0f),box_size(0.0f), angle(0.0f), 
+Player::Player() :is_car(false), is_bike(false), image(NULL), nowMaetu(0),
+location(0.0f), box_size(0.0f), angle(0.0f),
 speed(0.0f), hp(0.0f), tyokin(0.0f), keyCount(0)
 {
 
@@ -27,7 +27,8 @@ Player::~Player()
 //初期化処理
 void Player::Initialize()
 {
-	is_active = true;
+	is_car = true;
+	is_bike = true;
 	location = Vector2D(190.0f, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 77.7f);
 	speed = 3.0f;
@@ -64,15 +65,29 @@ void Player::Update()
 	//	return;
 	//}
 
-	//操作不可状態であれば、自身をガッカリさせる
-	if (!is_active)
+	//車であれば、自身をガッカリさせる
+	if (!is_car)
+	{
+		maetuCount++;
+		nowMaetu = 2;
+		if (MAETUTIME <= maetuCount)
+		{
+			nowMaetu = 0;
+			is_car = true;
+			maetuCount = 0;
+		}
+		return;
+	}
+
+	//バイクであれば、自身を喜ばせる
+	if (!is_bike)
 	{
 		maetuCount++;
 		nowMaetu = 1;
 		if (MAETUTIME <= maetuCount)
 		{
 			nowMaetu = 0;
-			is_active = true;
+			is_bike = true;
 			maetuCount = 0;
 		}
 		return;
@@ -148,9 +163,15 @@ void Player::Finalize()
 }
 
 //状態設定処理
-void Player::SetActive(bool flg)
+void Player::SetIsCar(bool flg)
 {
-	this->is_active = flg;
+	this->is_car = flg;
+}
+
+//状態設定処理
+void Player::SetIsBike(bool flg)
+{
+	this->is_bike = flg;
 }
 
 //体力減少処理
