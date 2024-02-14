@@ -218,7 +218,7 @@ bool RankingInputScene::InputName()
     }
 
     //カーソル位置の文字を決定する
-    if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
+    if (InputControl::GetButtonDown(XINPUT_BUTTON_A))
     {
         if (cursor_y < 2)
         {
@@ -256,6 +256,10 @@ bool RankingInputScene::InputName()
                 name[--name_num] = NULL;
             }
         }
+    }
+
+    if (InputControl::GetButtonDown(XINPUT_BUTTON_B)) {
+        name[--name_num] = NULL;
     }
 
     return false;
