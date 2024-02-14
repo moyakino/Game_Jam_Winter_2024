@@ -8,12 +8,16 @@ class Player
 private:
 	bool is_active;     //有効常態か？
 	int image;          //画像データ
+	int maetu[3];
+	int nowMaetu;
 	Vector2D location;  //位置座標
 	Vector2D box_size;  //当たり判定の大きさ
 	float angle;        //角度
 	float speed;        //速さ
 	float hp;           //体力(心)
 	float tyokin;       //貯金
+
+	int maetuCount;       //ガッカリタイム
 	int keyCount;       //入力クールタイム
 
 public:
