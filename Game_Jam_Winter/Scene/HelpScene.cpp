@@ -9,7 +9,7 @@ HelpScene::HelpScene() :background_image(NULL), Help_song_handle(0)
 
 HelpScene::~HelpScene()
 {
-
+	
 }
 
 
@@ -60,17 +60,17 @@ void HelpScene::Draw()const
 	DrawGraph(0, 0, background_image, FALSE);
 
 	//ゲーム説明
+	SetFontSize(90);
+	DrawString(0, 30, "～～ヘルプ～～", 0xffffff,0);
 	SetFontSize(30);
-	DrawString(20, 120, "ヘルプ画面", 0xffffff,0);
-	SetFontSize(24);-
-	DrawString(20, 160, "前津ニキの心とお金をコントロールしよう", 0xffffff, 0);
+	DrawString(20, 140, "前津ニキの心とお金をコントロールしよう", 0xffffff, 0);
+	SetFontSize(40);
+	DrawString(20, 210, "基本操作", 0xffffff, 0);
 	SetFontSize(30);
-	DrawString(20, 250, "基本操作", 0xffffff, 0);
-	SetFontSize(24);
-	DrawString(20, 280, "・十字ボタンで操作します（左右）", 0xffffff, 0);
-	DrawString(20, 310, "・前津ニキの好きなバイクをとるとスコアが加算され\n  貯金が減ります", 0xffffff, 0);
-	DrawString(20, 370, "・前津ニキの好きなバイクを逃してしまうと心のゲージが減少します", 0xffffff, 0);
-	DrawString(20, 360, "・前津ニキの好きじゃないバイクを取ると心と貯金のゲージが減少します", 0xffffff, 0);
+	DrawString(20, 260, "・十字ボタンで操作します（左右）", 0xffffff, 0);
+	DrawString(20, 310, "・前津ニキの好きなバイクをとると\n  スコアが加算され貯金が減ります", 0xffffff, 0);
+	DrawString(20, 390, "・前津ニキの好きなバイクを逃してしまうと\n  心のゲージが減少します", 0xffffff, 0);
+	DrawString(20, 470, "・前津ニキの好きじゃないバイクを取ると\n  心と貯金のゲージが減少します", 0xffffff, 0);
 	/*SetFontSize(30);*/
 	/*DrawString(20, 400, "色の変え方", 0xffffff, 0);
 	SetFontSize(24);
@@ -81,7 +81,7 @@ void HelpScene::Draw()const
 
 	
 	SetFontSize(30);
-	DrawString(50, 550, "Bボタンを押してタイトルへ戻る", 0xffffff, 0);
+	DrawString(95, 550, "Bボタンを押してタイトルへ戻る", 0xff0000, 0);
 }
 
 

@@ -3,14 +3,14 @@
 #include "DxLib.h"
 
 TitleScene::TitleScene() :background_image(NULL), /*menu_image(NULL),*/kuruma_image(NULL), state_image(NULL), help_image(NULL), ranking_image(NULL), end_image(NULL),
-cursor_image(NULL), menu_cursor(0), Title_Bgm(0), cursor_down_se(0), cursor_up_se(0)
+cursor_image(NULL), menu_cursor(0), Title_Bgm(0), cursor_down_se(0), cursor_up_se(0), Mae_se(0)
 {
 
 }
 
 TitleScene::~TitleScene()
 {
-	//DeleteSoundMem(Title_Bgm);
+	
 	DeleteSoundMem(cursor_down_se);
 	DeleteSoundMem(cursor_up_se);
 }
@@ -33,6 +33,9 @@ void TitleScene::Initialize()
 	Title_Bgm = LoadSoundMem("Resource/music/BGM/Title_and_help_bgm.wav");
 	//音声ファイルのボリュームを変更できる 0:無音 255:最大音量
 	ChangeVolumeSoundMem(50, Title_Bgm);
+
+	//前津ニキSE再生
+	Mae_se = LoadSoundMem("Resource/music/SE/2bfe568d1f530c6f .m4a");
 
 	//エラーチェック
 	if (background_image == -1)
@@ -100,6 +103,7 @@ eSceneType TitleScene::Update()
 	//カーソル決定（決定した画面に遷移する）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
+		PlaySoundMem(Mae_se, DX_PLAYTYPE_BACK, FALSE);
 		//StopSoundMem();
 		switch (menu_cursor)
 		{
@@ -162,7 +166,7 @@ void TitleScene::Finalize()
 	DeleteGraph(ranking_image);
 	DeleteGraph(help_image);
 	DeleteGraph(end_image);
-
+	//DeleteSoundMem(Mae_se);
 }
 
 
@@ -170,4 +174,9 @@ void TitleScene::Finalize()
 eSceneType TitleScene::GetNowScene()const
 {
 	return eSceneType::E_TITLE;
+}
+
+int TitleScene::Title_SE()
+{
+	return Mae_se;
 }
