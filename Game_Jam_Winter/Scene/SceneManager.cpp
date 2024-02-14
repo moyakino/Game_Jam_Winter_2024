@@ -8,7 +8,7 @@
 #include "RankingDispScene.h"
 #include "RankingInputScene.h"
 
-SceneManager::SceneManager() :current_scene(nullptr)
+SceneManager::SceneManager() :current_scene(nullptr), BGM(0)
 {
 
 }
@@ -47,6 +47,9 @@ void SceneManager::Initialize()
 		throw("描画先の指定ができませんでした\n");
 	}
 
+	BGM = LoadSoundMem("Resource/music/BGM/Title.wav");
+	ChangeVolumeSoundMem(50, BGM);
+
 	//タイトルシーンから始める
 	ChangeScene(eSceneType::E_TITLE);
 }
@@ -61,6 +64,9 @@ void SceneManager::Update()
 	//メインループ
 	while (ProcessMessage() != -1)
 	{
+
+		PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, FALSE);
+
 		//現在時間を取得
 		LONGLONG now_time = GetNowHiPerformanceCount();
 
@@ -78,6 +84,12 @@ void SceneManager::Update()
 
 			//描画処理
 			Draw();
+
+			if (next == eSceneType::E_MAIN) 
+			{
+				StopSoundMem(BGM);
+			}
+
 
 			//エンドが選択されていたら、ゲームを終了する
 			if (next == eSceneType::E_END)
@@ -111,6 +123,8 @@ void SceneManager::Finalize()
 		delete current_scene;
 		current_scene = nullptr;
 	}
+
+	DeleteSoundMem(BGM);
 
 	//DXライブラリの使用を終了する
 	DxLib_End();
