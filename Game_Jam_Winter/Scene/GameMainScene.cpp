@@ -156,6 +156,7 @@ eSceneType GameMainScene::Update()
                     score += 10000;
                     player->DecreaseTyokin(-1000.0f);//貯金減らす
                     player->SetIsBike(false);//バイク触れたアニメーション変更
+                    ScoreString = TRUE;
                 }
                 else {
                     player->DecreaseHp(-100.0f);     //体力(心)減らす
@@ -167,6 +168,15 @@ eSceneType GameMainScene::Update()
                 enemy[i] = nullptr;
             }
         }
+    }
+
+    if (ScoreString == TRUE) {
+        DrawPlusScoreCount++;
+    }
+
+    if (DrawPlusScoreCount > 60) {
+        DrawPlusScoreCount = 0;
+        ScoreString = FALSE;
     }
 
     ////前津ニキの体力(心)か貯金が０未満なら、遷移する
@@ -189,7 +199,7 @@ void GameMainScene::Draw()const
 {
     //背景画像(道路)の描画
     //なぜ480か？ 今回の道路の画像の横幅が480になっている２個目のDrawGraphで上の部分を描画しており
-    //１回目の部分は徐々にスクロールしていく際にずれが出てくるため、それを１回目の部分でくっつけて(重ねている？)切れ目なしでスクロールしているように見せている 480
+    //１回目の部分は徐々にスクロールしていく際にずれが出てくるため、それを１回目の部分でくっつけて(重ねている？)切れ目なしでスクロールしているように見せている
     DrawGraph(0, mileage % 650 - 650, back_ground, TRUE);
     DrawGraph(0, mileage % 650, back_ground, TRUE);
 
@@ -241,6 +251,10 @@ void GameMainScene::Draw()const
     DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,
         GetColor(0, 102, 204), TRUE);
     DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
+
+    if (ScoreString == TRUE) {
+        DrawFormatString(player->GetLocation().x - 30, player->GetLocation().y - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");
+    }
 }
 
 

@@ -19,6 +19,11 @@ private:
 	int enemy_create_span;	//敵の生成スパンの計測
 	int main_song_handle;//ゲームメインで流れるメインの曲用変数
 
+	bool ScoreString;	//加算スコアを描画
+	int DrawPlusScoreCount;	//加算したスコアの時間を測るタイマー
+
+	
+
 	int Mae_HappySE;
 
 	Player* player;      //プレイヤー
