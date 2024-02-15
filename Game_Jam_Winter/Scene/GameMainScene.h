@@ -26,7 +26,7 @@ private:
 	int Biku_Get_SE = 0;
 	int Car_Get_SE = 0;
 	
-	int GameMain_UI_ArrayImg[3];
+	int GameMain_UI_ArrayImg[4];
 
 	int fps = 0;
 	int Count = 0;

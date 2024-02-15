@@ -20,7 +20,7 @@ enemy(nullptr)
         enemy_count[i] = NULL;
     }
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
     {
         GameMain_UI_ArrayImg[i] = NULL;
     }
@@ -51,6 +51,7 @@ void GameMainScene::Initialize()
     GameMain_UI_ArrayImg[0] = LoadGraph("Resource/images/バイク1_透過.png"); //UI画像
     GameMain_UI_ArrayImg[1] = LoadGraph("Resource/images/バイク2_透過.png"); //UI画像
     GameMain_UI_ArrayImg[2] = LoadGraph("Resource/images/バイク3_透過.png"); //UI画像
+    GameMain_UI_ArrayImg[3] = LoadGraph("Resource/images/バイク4_透過.png"); //UI画像
 
     //音楽(BGM,SE,MAINSONG)の読み込み
     main_song_handle = LoadSoundMem("Resource/music/BGM/GameMain.wav");
@@ -292,21 +293,24 @@ void GameMainScene::Draw()const
     DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);*/
 
     //UI
-    DrawRotaGraphF(570.0f, 160.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[0], TRUE, TRUE);
-    DrawFormatString(510, 210, GetColor(255, 255, 255), "スコア：_____");
 
-    DrawRotaGraphF(570.0f, 290.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[1], TRUE, TRUE);
-    DrawFormatString(510, 340, GetColor(255, 255, 255), "スコア：_____");
+    DrawFormatString(510, 120, GetColor(255, 255, 255), "バイクの種類 ↓");
 
-    DrawRotaGraphF(570.0f, 410.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
-    DrawFormatString(510, 460, GetColor(255, 255, 255), "スコア：_____");
+    DrawRotaGraphF(570.0f, 200.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[0], TRUE, TRUE);
+    //DrawFormatString(510, 210, GetColor(255, 255, 255), "スコア：_____");
 
-    DrawRotaGraphF(570.0f, 530.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
-    DrawFormatString(510, 573, GetColor(255, 255, 255), "スコア：_____");
+    DrawRotaGraphF(570.0f, 300.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[1], TRUE, TRUE);
+    //DrawFormatString(510, 340, GetColor(255, 255, 255), "スコア：_____");
+
+    DrawRotaGraphF(570.0f, 400.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
+    //DrawFormatString(510, 460, GetColor(255, 255, 255), "スコア：_____");
+
+    DrawRotaGraphF(570.0f, 500.0f, 0.8f, PI / -2, GameMain_UI_ArrayImg[3], TRUE, TRUE);
+    //DrawFormatString(510, 573, GetColor(255, 255, 255), "スコア：_____");
 
     /*DrawFormatString(570, , GetColor(255, 255, 255), "体力ゲージ");*/
     if (ScoreString == TRUE) {
-        DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");
+        DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "+1000");
     }
 }
 
@@ -359,7 +363,7 @@ void GameMainScene::Finalize()
 
     delete[] enemy;
     
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
     {
         DeleteGraph(GameMain_UI_ArrayImg[i]);
     }

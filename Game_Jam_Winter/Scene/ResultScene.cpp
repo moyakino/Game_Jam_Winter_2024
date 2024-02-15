@@ -30,13 +30,13 @@ void ResultScene::Initialize()
 	FILE* fp = nullptr;
 
 	//画像の読み込み
-	back_ground = LoadGraph("Resource/images/back.bmp");
+	back_ground = LoadGraph("Resource/images/リザルト.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
 
 	//エラーチェック
 	if (back_ground == -1)
 	{
-		throw("Resource/images/back.bmpがありません\n");
+		throw("Resource/images/リザルト.pngがありません\n");
 	}
 	if (result == -1)
 	{
@@ -83,16 +83,21 @@ eSceneType ResultScene::Update()
 void ResultScene::Draw()const
 {
 	//背景画像を描画
-	DrawGraph(0, 0, back_ground, TRUE);
+	DrawRotaGraph(320, 430,0.5f, 0, back_ground, FALSE, FALSE);
+
+	SetBackgroundColor(255, 255, 255);
 
 	//スコア等表示領域
-	DrawBox(150, 150, 490, 330, GetColor(0, 153, 0), TRUE);
-	DrawBox(150, 150, 490, 330, GetColor(0, 0, 0), FALSE);
+	//DrawBox(150, 150, 490, 330, GetColor(0, 153, 0), TRUE);	//緑
+	DrawBox(200, 150, 440, 300, GetColor(0, 0, 0), FALSE);//真ん中に出てくる小さい画面の枠線
 
-	DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
+	//DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);		//緑
+
+	SetFontSize(30);
+	DrawString(125, 550, "Bボタンを押してランキングへ", 0xff0000, 0);
 
 	SetFontSize(20);
-	DrawString(250, 170, "ゲーム終了", GetColor(204, 0, 0));
+	DrawString(270, 170, "ゲーム終了", GetColor(0, 0, 0));
 	SetFontSize(16);
 	/*DrawString(180, 200, "走行距離         ", GetColor(0, 0, 0));
 	for (int i = 0; i < 3; i++)
@@ -102,8 +107,7 @@ void ResultScene::Draw()const
 		DrawFormatString(260, 222 + (i * 21), GetColor(255, 255, 255), "%6d x%4d=%6d",
 			enemy_count[i], (i + 1) * 50, (i + 1) * 50 * enemy_count[i]);
 	}*/
-	DrawString(180, 290, "スコア", GetColor(0, 0, 0));
-	DrawFormatString(180, 290, 0xFFFFFF, "         =%6d", score);
+	DrawFormatString(260, 230, 0x000000, "スコア =%6d", score);
 }
 
 
