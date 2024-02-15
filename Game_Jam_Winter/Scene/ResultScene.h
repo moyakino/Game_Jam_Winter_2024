@@ -10,9 +10,7 @@ private:
 	int enemy_count[3];   //敵のカウント
 	int enemy_image[3];   //敵画像
 
-	//int score[6];       //スコアデータ
-	//int rank[6];        //ランクデータ
-	//char name[6][15];   //名前データ
+	int GetScore[6];	  
 
 public:
 	ResultScene();

@@ -254,12 +254,12 @@ void GameMainScene::Draw()const
         FALSE);
 
     //貯金ゲージの描画
-    fx = 510.0f;
-    fy = 450.0f;
-    DrawFormatString(fx, fy, GetColor(0, 0, 0), "貯金額");
-    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,
-        GetColor(0, 102, 204), TRUE);
-    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
+    //fx = 510.0f;
+    //fy = 450.0f;
+    /*DrawFormatString(fx, fy, GetColor(0, 0, 0), "貯金額");*/
+    /*DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,
+        GetColor(0, 102, 204), TRUE);*/
+    /*DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);*/
 
     if (ScoreString == TRUE) {
         DrawFormatString(player->GetLocation().x - 30, player->GetLocation().y - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");

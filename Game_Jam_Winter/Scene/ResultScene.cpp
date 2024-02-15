@@ -10,6 +10,11 @@ ResultScene::ResultScene() :back_ground(NULL), score(0)
 		enemy_image[i] = NULL;
 		enemy_count[i] = NULL;
 	}
+
+	for (int i = 0; i < 6; i++) {
+		GetScore[i] = '\0';
+	}
+
 }
 
 ResultScene::~ResultScene()
@@ -21,6 +26,9 @@ ResultScene::~ResultScene()
 //初期化処理
 void ResultScene::Initialize()
 {
+	//ランキングデータの読み込み
+	FILE* fp = nullptr;
+
 	//画像の読み込み
 	back_ground = LoadGraph("Resource/images/back.bmp");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
@@ -35,6 +43,19 @@ void ResultScene::Initialize()
 		throw("Resource/images/car.bmpがありません\n");
 	}
 
+	//ファイルオープン
+	errno_t judge = fopen_s(&fp, "Resource/dat/ranking_data.csv", "r");
+
+	//対象ファイルから読み込む
+	for (int i = 0; i < 5; i++)
+	{
+		fscanf_s(fp, "%6d \n", &GetScore[i]);
+	}
+
+	fclose(fp);
+
+	GetScore[5] = 0;
+
 	//ゲーム結果の読み込み
 	ReadResultData();
 }
@@ -46,7 +67,12 @@ eSceneType ResultScene::Update()
 	//Bボタンでランキングに遷移する
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
-		return eSceneType::E_RANKING_INPUT;
+		if (GetScore[4] < score) {
+			return eSceneType::E_RANKING_INPUT;
+		}
+		else {
+			return eSceneType::E_TITLE;
+		}
 	}
 
 	return GetNowScene();
