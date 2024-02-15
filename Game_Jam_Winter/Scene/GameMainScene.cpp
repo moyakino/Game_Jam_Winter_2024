@@ -19,6 +19,11 @@ enemy(nullptr)
         enemy_count[i] = NULL;
     }
 
+    for (int i = 0; i < 3; i++)
+    {
+        GameMain_UI_ArrayImg[i] = NULL;
+    }
+
     title = new TitleScene;
 
 }
@@ -40,6 +45,10 @@ void GameMainScene::Initialize()
     barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
     int result = LoadDivGraph("Resource/images/enemy.png", 4, 4, 1, 63, 120, enemy_image); //敵の分割読み込み
 
+    GameMain_UI_ArrayImg[0] = LoadGraph("Resource/images/バイク1_透過.png"); //UI画像
+    GameMain_UI_ArrayImg[1] = LoadGraph("Resource/images/バイク2_透過.png"); //UI画像
+    GameMain_UI_ArrayImg[2] = LoadGraph("Resource/images/バイク3_透過.png"); //UI画像
+
     //音楽(BGM,SE,MAINSONG)の読み込み
     main_song_handle = LoadSoundMem("Resource/music/BGM/GameMain.wav");
 
@@ -49,6 +58,9 @@ void GameMainScene::Initialize()
     Mae_BadSE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
 
     ChangeVolumeSoundMem(50, main_song_handle);
+
+    Biku_Get_SE = LoadSoundMem("Resource/music/SE/maetu_喜ぶ_トリミング.wav");
+    Car_Get_SE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
     //ChangeVolumeSoundMem(100, main_song_handle);
 
     //エラーチェック 画像が正しく読み込まれているかの確認
@@ -75,6 +87,25 @@ void GameMainScene::Initialize()
         //敵用の車の分割読み込み
         throw("Resource/music/MAINSONG/GameMain_main_song_1.wavがありません\n");
     }
+    if (Biku_Get_SE == -1)
+    {
+        //音ファイル(SE)の読み込み
+        throw("Resource/music/SE/maetu_喜ぶ_トリミング.wavがありません\n");
+    }
+    if (Car_Get_SE == -1)
+    {
+        //音ファイル(SE)の読み込み
+        throw("Resource/music/SE/maetu_悲しむ_トリミング.wavがありません\n");
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        if (GameMain_UI_ArrayImg[i] == -1)
+        {
+            //背景画像(道路の画像)
+            throw("Resource/images/バイクi_透過.pngがありません。\n");
+        }
+    }
 
     //オブジェクトの生成 プレイヤーと敵 敵の最大数は10？
     player = new Player;
@@ -93,6 +124,8 @@ void GameMainScene::Initialize()
 //更新処理
 eSceneType GameMainScene::Update()
 {
+    fps++;
+
     enemy_create_span++;
 
     //MAINSONG再生
@@ -105,7 +138,7 @@ eSceneType GameMainScene::Update()
     mileage += (int)player->GetSpeed() + 5;
 
     //敵生成処理 間隔で決めている 75
-    if (enemy_create_span % 32 == 0)
+    if (enemy_create_span % 20 == 0)
     {
         
         // i < 10 の 10は敵の最大数
@@ -159,13 +192,16 @@ eSceneType GameMainScene::Update()
             if (IsHitCheck(player, enemy[i]))
             {
                 if (enemy[i]->GetType() == 3) {
+                    PlaySoundMem(Biku_Get_SE, DX_PLAYTYPE_BACK, TRUE);
                     score += 10000;
                     player->DecreaseTyokin(-1000.0f);//貯金減らす
                     player->SetIsBike(false);//バイク触れたアニメーション変更
                     PlaySoundMem(Mae_HappySE, DX_PLAYTYPE_BACK, TRUE);
                     ScoreString = TRUE;
+                    DrawPlusScoreCount = 0;
                 }
                 else {
+                    PlaySoundMem(Car_Get_SE, DX_PLAYTYPE_BACK, TRUE);
                     player->DecreaseHp(-100.0f);     //体力(心)減らす
                     player->DecreaseTyokin(-2000.0f);//貯金減らす
                     PlaySoundMem(Mae_BadSE, DX_PLAYTYPE_BACK, TRUE);
@@ -193,7 +229,13 @@ eSceneType GameMainScene::Update()
     //    return eSceneType::E_RANKING_INPUT;
     //}
 
-    if (player->GetHp() <= 0 || player->GetTyokin() <= 0) {
+    if (fps > 59) {
+        fps = 0;
+        Count++;
+    }
+
+    //前津ニキの体力(心)か貯金が０未満なら、遷移する
+    if ((player->GetHp() <= 0 || player->GetTyokin() <= 0)) {
 
         return eSceneType::E_RESULT;
 
@@ -221,47 +263,59 @@ void GameMainScene::Draw()const
         }
     }
 
+    DrawFormatString(0, 20, GetColor(255, 255, 255), "%d:fps %d:count", fps, Count);
+
     //プレイヤーの描画
     player->Draw();
 
-    //UIの描画 DrawBoxで緑の部分描画
-    DrawBox(500, 0, WIDTH, HEIGHT, GetColor(0, 153, 0), TRUE);
+    //UIの描画 DrawBoxで緑の部分描画 153
+    DrawBox(500, 0, WIDTH, HEIGHT, GetColor(50, 50, 50), TRUE);
+    DrawBox(500, 0, WIDTH, HEIGHT, GetColor(255, 255, 255), FALSE);
 
     SetFontSize(16);
-    DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
+    /*DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
     DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", high_score);
     DrawFormatString(510, 80, GetColor(0, 0, 0), "避けた数");
+
     for (int i = 0; i < 3; i++)
     {
         DrawRotaGraph(523 + (i * 50), 120, 0.3, 0, enemy_image[i], TRUE, FALSE);
         DrawFormatString(510 + (i * 50), 140, GetColor(255, 255, 255), "%03d", enemy_count[i]);
-    }
-    DrawFormatString(510, 200, GetColor(0, 0, 0), "走行距離");
+    }*/
+
+    /*DrawFormatString(510, 200, GetColor(0, 0, 0), "走行距離");
     DrawFormatString(555, 220, GetColor(255, 255, 255), "%08d", mileage / 10);
     DrawFormatString(510, 240, GetColor(0, 0, 0), "スピード");
-    DrawFormatString(555, 260, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());
+    DrawFormatString(555, 260, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());*/
 
-    DrawFormatString(555, 360, GetColor(255, 255, 255), "スコア\n%06d", score);
+    DrawFormatString(510, 15, GetColor(255, 255, 255), "スコア：%06d", score);
 
     //体力(心)ゲージの描画
     float fx = 510.0f;
-    float fy = 390.0f;
-    DrawFormatString(fx, fy, GetColor(0, 0, 0), "心ゲージ");
-    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / MAXHP), fy + 40.0f,
-        GetColor(255, 0, 0), TRUE);
-    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0),
-        FALSE);
+    float fy = 50.0;
+    DrawFormatString(fx, fy, GetColor(255, 255, 255), "体力ゲージ");
+    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / MAXHP), fy + 40.0f,GetColor(255, 0, 0), TRUE);
+    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0),FALSE);
 
     //貯金ゲージの描画
     fx = 510.0f;
-    fy = 450.0f;
-    DrawFormatString(fx, fy, GetColor(0, 0, 0), "貯金額");
-    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,
-        GetColor(0, 102, 204), TRUE);
+    fy = 100.0f;
+    DrawFormatString(fx, fy, GetColor(255, 255, 255), "貯金額");
+    DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,GetColor(0, 102, 204), TRUE);
     DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
 
+    //UI
+    DrawRotaGraphF(570.0f, 200.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[0], TRUE, TRUE);
+    DrawFormatString(510, 250, GetColor(255, 255, 255), "スコア：_____");
+
+    DrawRotaGraphF(570.0f, 310.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[1], TRUE, TRUE);
+    DrawFormatString(510, 360, GetColor(255, 255, 255), "スコア：_____");
+
+    DrawRotaGraphF(570.0f, 420.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
+    DrawFormatString(510, 470, GetColor(255, 255, 255), "スコア：_____");
+
     if (ScoreString == TRUE) {
-        DrawFormatString(player->GetLocation().x - 30, player->GetLocation().y - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");
+        DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");
     }
 }
 
@@ -313,6 +367,15 @@ void GameMainScene::Finalize()
     }
 
     delete[] enemy;
+    
+    for (int i = 0; i < 3; i++)
+    {
+        DeleteGraph(GameMain_UI_ArrayImg[i]);
+    }
+
+    DeleteSoundMem(main_song_handle);
+    DeleteSoundMem(Biku_Get_SE);
+    DeleteSoundMem(Car_Get_SE);
 }
 
 //現在のシーン情報を取得

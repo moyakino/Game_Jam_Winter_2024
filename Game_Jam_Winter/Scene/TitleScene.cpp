@@ -28,8 +28,9 @@ void TitleScene::Initialize()
 	end_image = LoadGraph("Resource/images/end_m.bmp");
 	cursor_image = LoadGraph("Resource/images/cone.bmp");
 	cursor_down_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
-	ChangeVolumeSoundMem(150, cursor_down_se);
+	ChangeVolumeSoundMem(125, cursor_down_se);
 	cursor_up_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
+	ChangeVolumeSoundMem(125, cursor_up_se);
 	mae2_image = LoadGraph("Resource/images/Title_img.png");
 	//ChangeVolumeSoundMem(150, Title_Bgm);
 
@@ -42,9 +43,10 @@ void TitleScene::Initialize()
 	{
 		throw("Resource/images/Title.bmpがありません\n");
 	}
-
-
-
+	if (Mae_se == -1)
+	{
+		throw("Resource/music/SE/maetu_決定_トリミング.wav\n");
+	}
 	if (state_image == -1)
 	{
 		throw("Resource/images/start_m.bmpがありません\n");
