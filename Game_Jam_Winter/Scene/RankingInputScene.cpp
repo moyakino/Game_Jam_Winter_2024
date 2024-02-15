@@ -31,9 +31,9 @@ void RankingInputScene::Initialize()
 
     Mae_ExitSE = LoadSoundMem("Resource/music/SE/maetu_戻る_トリミング.wav");
 
-    ChangeVolumeSoundMem(400, Mae_DecitionSE);
-
     ChangeVolumeSoundMem(500, Mae_DecitionSE);
+
+    ChangeVolumeSoundMem(600, Mae_ExitSE);
 
     //エラーチェック
     if (backgrouond_image == -1)

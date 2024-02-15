@@ -11,10 +11,6 @@ ResultScene::ResultScene() :back_ground(NULL), score(0)
 		enemy_count[i] = NULL;
 	}
 
-	for (int i = 0; i < 6; i++) {
-		GetScore[i] = '\0';
-	}
-
 }
 
 ResultScene::~ResultScene()
@@ -44,17 +40,16 @@ void ResultScene::Initialize()
 	}
 
 	//ファイルオープン
-	errno_t judge = fopen_s(&fp, "Resource/dat/ranking_data.csv", "r");
+	errno_t rank = fopen_s(&fp, "Resource/dat/ranking_data.csv", "r");
 
 	//対象ファイルから読み込む
 	for (int i = 0; i < 5; i++)
 	{
-		fscanf_s(fp, "%6d \n", &GetScore[i]);
+		fscanf_s(fp, "%6d,%2d,%15s \n", &InScore[i], &InRank[i], InName[i], 15);
 	}
 
+	//ファイルクローズ
 	fclose(fp);
-
-	GetScore[5] = 0;
 
 	//ゲーム結果の読み込み
 	ReadResultData();
@@ -67,7 +62,7 @@ eSceneType ResultScene::Update()
 	//Bボタンでランキングに遷移する
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
-		if (GetScore[4] < score) {
+		if (InScore[4] < score) {
 			return eSceneType::E_RANKING_INPUT;
 		}
 		else {

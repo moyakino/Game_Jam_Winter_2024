@@ -23,6 +23,8 @@ void HelpScene::Initialize()
 	//タイトルに戻る時のSE読み込み
 	Help_song_handle = LoadSoundMem("Resource/music/SE/maetu_戻る_トリミング.wav");
 
+	ChangeVolumeSoundMem(700, Help_song_handle);
+
 	//エラーチェック
 	if (background_image == -1)
 	{

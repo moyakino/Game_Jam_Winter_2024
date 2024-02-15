@@ -7,7 +7,7 @@
 #define HEIGHT 600
 #define MAXHP 5000
 #define MAXTYOKIN 20000
-#define TIMELIMIT 60
+#define TIMELIMIT 30
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
 barrier_image(NULL), main_song_handle(0), player(nullptr),
@@ -61,11 +61,11 @@ void GameMainScene::Initialize()
 
     Mae_BadSE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
 
-    ChangeVolumeSoundMem(50, main_song_handle);
+    ChangeVolumeSoundMem(150, main_song_handle);
 
-    ChangeVolumeSoundMem(150, Mae_HappySE);
+    ChangeVolumeSoundMem(900, Mae_HappySE);
 
-    ChangeVolumeSoundMem(350, Mae_BadSE);
+    ChangeVolumeSoundMem(900, Mae_BadSE);
 
     Biku_Get_SE = LoadSoundMem("Resource/music/SE/maetu_喜ぶ_トリミング.wav");
     Car_Get_SE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
@@ -233,11 +233,12 @@ eSceneType GameMainScene::Update()
 
     if (fps > 59) {
         fps = 0;
+        TimeLimit--;    //制限時間を減らす
         Count++;
     }
 
     //前津ニキの体力(心)か貯金が０未満なら、遷移する
-    if ((player->GetHp() <= 0 || player->GetTyokin() <= 0)) {
+    if (player->GetHp() <= 0 || TimeLimit <= 0) {
 
         return eSceneType::E_RESULT;
 
@@ -265,8 +266,6 @@ void GameMainScene::Draw()const
         }
     }
 
-    DrawFormatString(0, 20, GetColor(255, 255, 255), "%d:fps %d:count", fps, Count);
-
     //プレイヤーの描画
     player->Draw();
 
@@ -275,6 +274,7 @@ void GameMainScene::Draw()const
     DrawBox(500, 0, WIDTH, HEIGHT, GetColor(255, 255, 255), FALSE);
 
     SetFontSize(16);
+    DrawFormatString(0, 20, GetColor(255, 255, 255), "%d:fps %d:count", fps, Count);
 
     DrawFormatString(510, 15, GetColor(255, 255, 255), "スコア：%06d", score);
 
@@ -308,9 +308,16 @@ void GameMainScene::Draw()const
     DrawRotaGraphF(570.0f, 500.0f, 0.8f, PI / -2, GameMain_UI_ArrayImg[3], TRUE, TRUE);
     //DrawFormatString(510, 573, GetColor(255, 255, 255), "スコア：_____");
 
-    /*DrawFormatString(570, , GetColor(255, 255, 255), "体力ゲージ");*/
     if (ScoreString == TRUE) {
-        DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "+1000");
+        DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "1000");
+    }
+
+    SetFontSize(20);
+    if (TimeLimit >= 10) {
+        DrawFormatString(240, 50, GetColor(255, 255, 255), "制限時間\n   %d", TimeLimit);
+    }
+    else {
+        DrawFormatString(240, 50, GetColor(255, 0, 0), "制限時間\n   %d", TimeLimit);
     }
 }
 
