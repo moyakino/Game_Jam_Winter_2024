@@ -234,7 +234,7 @@ eSceneType GameMainScene::Update()
     if (fps > 59) {
         fps = 0;
         TimeLimit--;    //制限時間を減らす
-        Count++;
+        //Count++;
     }
 
     //前津ニキの体力(心)か貯金が０未満なら、遷移する
@@ -274,7 +274,7 @@ void GameMainScene::Draw()const
     DrawBox(500, 0, WIDTH, HEIGHT, GetColor(255, 255, 255), FALSE);
 
     SetFontSize(16);
-    DrawFormatString(0, 20, GetColor(255, 255, 255), "%d:fps %d:count", fps, Count);
+    //DrawFormatString(0, 20, GetColor(255, 255, 255), "%d:fps %d:count", fps, Count);
 
     DrawFormatString(510, 15, GetColor(255, 255, 255), "スコア：%06d", score);
 
@@ -312,7 +312,7 @@ void GameMainScene::Draw()const
         DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "+1000");
     }
 
-    SetFontSize(20);
+    SetFontSize(30);
     if (TimeLimit >= 10) {
         DrawFormatString(240, 50, GetColor(255, 255, 255), "制限時間\n   %d", TimeLimit);
     }
