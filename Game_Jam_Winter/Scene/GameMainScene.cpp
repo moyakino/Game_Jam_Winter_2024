@@ -193,7 +193,7 @@ eSceneType GameMainScene::Update()
             {
                 if (enemy[i]->GetType() == 3) {
                     PlaySoundMem(Biku_Get_SE, DX_PLAYTYPE_BACK, TRUE);
-                    score += 10000;
+                    score += 1000;
                     player->DecreaseTyokin(-1000.0f);//貯金減らす
                     player->SetIsBike(false);//バイク触れたアニメーション変更
                     PlaySoundMem(Mae_HappySE, DX_PLAYTYPE_BACK, TRUE);
@@ -222,12 +222,6 @@ eSceneType GameMainScene::Update()
         DrawPlusScoreCount = 0;
         ScoreString = FALSE;
     }
-
-    ////前津ニキの体力(心)か貯金が０未満なら、遷移する
-    //if (player->GetHp() < 0.0f || player->GetTyokin() < 0.0f)
-    //{
-    //    return eSceneType::E_RANKING_INPUT;
-    //}
 
     if (fps > 59) {
         fps = 0;
