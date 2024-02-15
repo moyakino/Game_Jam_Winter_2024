@@ -31,8 +31,6 @@ private:
 	int fps = 0;
 	int Count = 0;
 
-	int Mae_HappySE;
-
 	int Mae_HappySE;	 //前津ニキが喜ぶ時のSE
 	int Mae_BadSE;		 //前津ニキが落ち込む時のSE
 
