@@ -72,7 +72,7 @@ void HelpScene::Draw()const
 	DrawString(20, 210, "・十字ボタンで操作します（左右）", 0xffffff, 0);
 	DrawString(20, 260, "・前津ニキの好みのバイクをとると\n　スコアが加算されます", 0xffffff, 0);
 	DrawString(20, 340, "・前津ニキの好みではないバイクをとると\n  体力が減少します", 0xffffff, 0);
-	DrawString(20, 430, "・好みのバイクとそれ以外はプレイヤーの\n　動きで見つけてください！", 0xffffff, 0);
+	DrawString(20, 430, "・好みのバイクとそれ以外は前津ニキの\n　動きで見つけてください！", 0xffffff, 0);
 	/*SetFontSize(30);*/
 	/*DrawString(20, 400, "色の変え方", 0xffffff, 0);
 	SetFontSize(24);

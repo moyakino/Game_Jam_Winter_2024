@@ -45,7 +45,7 @@ void GameMainScene::Initialize()
 
     //画像の読み込み
     back_ground = LoadGraph("Resource/images/back01.bmp"); //背景画像(道路の画像)の読み込み
-    barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
+    //barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
     int result = LoadDivGraph("Resource/images/bikes.png", 4, 4, 1, 63, 120, enemy_image); //敵の分割読み込み
 
     GameMain_UI_ArrayImg[0] = LoadGraph("Resource/images/バイク1_透過.png"); //UI画像
@@ -77,12 +77,6 @@ void GameMainScene::Initialize()
     {
         //背景画像(道路の画像)
         throw("Resource/images/back.bmpがありません\n");
-    }
-
-    if (barrier_image == -1)
-    {
-        //バリア画像の読み込み
-        throw("Resource/images/barrier.pngがありません\n");
     }
 
     if (result == -1)
