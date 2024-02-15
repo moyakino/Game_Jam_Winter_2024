@@ -35,6 +35,18 @@ void ResultScene::Initialize()
 		throw("Resource/images/リザルト.pngがありません\n");
 	}
 
+	//ファイルオープン
+	errno_t rank = fopen_s(&fp, "Resource/dat/ranking_data.csv", "r");
+
+	//対象ファイルから読み込む
+	for (int i = 0; i < 5; i++)
+	{
+		fscanf_s(fp, "%6d,%2d,%15s \n", &InScore[i], &InRank[i], InName[i], 15);
+	}
+
+	//ファイルクローズ
+	fclose(fp);
+
 	//ゲーム結果の読み込み
 	ReadResultData();
 }
