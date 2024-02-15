@@ -48,7 +48,7 @@ void SceneManager::Initialize()
 	}
 
 	BGM = LoadSoundMem("Resource/music/BGM/Title.wav");
-	ChangeVolumeSoundMem(50, BGM);
+	ChangeVolumeSoundMem(55, BGM);
 
 	//タイトルシーンから始める
 	ChangeScene(eSceneType::E_TITLE);
@@ -65,8 +65,6 @@ void SceneManager::Update()
 	while (ProcessMessage() != -1)
 	{
 
-		PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, FALSE);
-
 		//現在時間を取得
 		LONGLONG now_time = GetNowHiPerformanceCount();
 
@@ -76,20 +74,21 @@ void SceneManager::Update()
 			//フレーム開始時間を更新する
 			start_time = now_time;
 
+			PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, FALSE);
+
 			//入力機能：更新処理
 			InputControl::Update();
 
 			//更新処理（戻り値は次のシーン情報）
 			eSceneType next = current_scene->Update();
 
-			//描画処理
-			Draw();
-
-			if (next == eSceneType::E_MAIN) 
+			if (next == eSceneType::E_MAIN || next == eSceneType::E_RESULT || next == eSceneType::E_RANKING_DISP)
 			{
 				StopSoundMem(BGM);
 			}
 
+			//描画処理
+			Draw();
 
 			//エンドが選択されていたら、ゲームを終了する
 			if (next == eSceneType::E_END)
