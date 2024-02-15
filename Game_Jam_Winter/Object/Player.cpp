@@ -155,10 +155,10 @@ void Player::Draw()
 		break;
 
 	case 2:
-		if ((HitFrame / 10) % 2 == 0)
-		{
+		//if ((HitFrame / 10) % 2 == 0)
+		//{
 			DrawGraph(location.x - 60.0f, location.y - 85.0f, maetu[2], TRUE);
-		}
+		//}
 		break;
 
 	default:
