@@ -8,7 +8,7 @@
 
 #define MAXHP 5000      //最大HP
 #define MAXTYOKIN 20000 //最大貯金額
-#define MAETUTIME 15    //前津ニキのアニメーション変更　小さい程すぐ終わる
+#define MAETUTIME 8     //前津ニキのアニメーション変更　小さい程すぐ終わる
 
 Player::Player() :is_car(false), is_bike(false), image(NULL), nowMaetu(0),
 location(0.0f), box_size(0.0f), angle(0.0f),
