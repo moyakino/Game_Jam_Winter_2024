@@ -8,7 +8,7 @@
 
 #define MAXHP 5000      //最大HP
 #define MAXTYOKIN 20000 //最大貯金額
-#define MAETUTIME 8     //前津ニキのアニメーション変更　小さい程すぐ終わる
+#define MAETUTIME 15    //前津ニキのアニメーション変更　小さい程すぐ終わる
 
 Player::Player() :is_car(false), is_bike(false), image(NULL), nowMaetu(0),
 location(0.0f), box_size(0.0f), angle(0.0f),
@@ -31,7 +31,7 @@ void Player::Initialize()
 	is_bike = true;
 	location = Vector2D(190.0f, HEIGHT - 100.0f);
 	box_size = Vector2D(31.0f, 77.7f);
-	speed = 3.0f;
+	speed = 1.0f;
 	hp = MAXHP;
 	tyokin = MAXTYOKIN;
 

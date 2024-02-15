@@ -147,7 +147,7 @@ eSceneType GameMainScene::Update()
     mileage += (int)player->GetSpeed() + 5;
 
     //敵生成処理 間隔で決めている 75
-    if (enemy_create_span % 20 == 0)
+    if (enemy_create_span % 35 == 0)
     {
         
         // i < 10 の 10は敵の最大数

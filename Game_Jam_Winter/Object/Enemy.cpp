@@ -1,7 +1,7 @@
 ﻿#include "Enemy.h"
 #include "DxLib.h"
 
-Enemy::Enemy(int type, int handle) :type(type), image(handle), Test_y(-50.0f), speed(0.0f), location(0.0f), box_size(0.0f), x_up(0.0f), y_up(10.0f)
+Enemy::Enemy(int type, int handle) :type(type), image(handle), Test_y(-50.0f), speed(0.0f), location(0.0f), box_size(0.0f), x_up(0.0f), y_up(8.0f)
 {
 
 }
