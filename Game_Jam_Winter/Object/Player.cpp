@@ -12,7 +12,7 @@
 
 Player::Player() :is_car(false), is_bike(false), image(NULL), nowMaetu(0),
 location(0.0f), box_size(0.0f), angle(0.0f),
-speed(0.0f), hp(0.0f), tyokin(0.0f), keyCount(0)
+speed(0.0f), hp(0.0f), tyokin(0.0f), HitFrame(0), keyCount(0)
 {
 
 }
@@ -38,6 +38,7 @@ void Player::Initialize()
 	nowMaetu = 0;
 	maetuCount = 0;
 	keyCount = 0;
+	HitFrame = 0;
 
 	//画像の読み込み
 	//image = LoadGraph("Resource/images/Player/maetu_125_166/透過/maetu_touka_tyokuritu_125_166.png");
@@ -68,15 +69,26 @@ void Player::Update()
 	//車であれば、自身をガッカリさせる
 	if (!is_car)
 	{
-		maetuCount++;
+		//maetuCount++;
+		//nowMaetu = 2;
+		//if (MAETUTIME <= maetuCount)
+		//{
+		//	nowMaetu = 0;
+		//	is_car = true;
+		//	maetuCount = 0;
+		//}
+		//return;
+
 		nowMaetu = 2;
-		if (MAETUTIME <= maetuCount)
-		{
-			nowMaetu = 0;
-			is_car = true;
-			maetuCount = 0;
-		}
+		is_car = TRUE;
+		HitFrame = 60;
 		return;
+	}
+
+	HitFrame--;
+	if (HitFrame < 0) {
+		HitFrame = 0;
+		nowMaetu = 0;
 	}
 
 	//バイクであれば、自身を喜ばせる
@@ -143,7 +155,10 @@ void Player::Draw()
 		break;
 
 	case 2:
-		DrawGraph(location.x - 60.0f, location.y - 85.0f, maetu[2], TRUE);
+		if ((HitFrame / 10) % 2 == 0)
+		{
+			DrawGraph(location.x - 60.0f, location.y - 85.0f, maetu[2], TRUE);
+		}
 		break;
 
 	default:
