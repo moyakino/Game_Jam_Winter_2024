@@ -69,27 +69,27 @@ void Player::Update()
 	//車であれば、自身をガッカリさせる
 	if (!is_car)
 	{
-		//maetuCount++;
-		//nowMaetu = 2;
-		//if (MAETUTIME <= maetuCount)
-		//{
-		//	nowMaetu = 0;
-		//	is_car = true;
-		//	maetuCount = 0;
-		//}
-		//return;
-
+		maetuCount++;
 		nowMaetu = 2;
-		is_car = TRUE;
-		HitFrame = 60;
+		if (MAETUTIME <= maetuCount)
+		{
+			nowMaetu = 0;
+			is_car = true;
+			maetuCount = 0;
+		}
 		return;
+
+		//nowMaetu = 2;
+		//is_car = TRUE;
+		//HitFrame = 60;
+		//return;
 	}
 
-	HitFrame--;
-	if (HitFrame < 0) {
-		HitFrame = 0;
-		nowMaetu = 0;
-	}
+	//HitFrame--;
+	//if (HitFrame < 0) {
+	//	HitFrame = 0;
+	//	nowMaetu = 0;
+	//}
 
 	//バイクであれば、自身を喜ばせる
 	if (!is_bike)
