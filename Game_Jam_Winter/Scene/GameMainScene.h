@@ -34,6 +34,8 @@ private:
 	int Mae_HappySE;	 //前津ニキが喜ぶ時のSE
 	int Mae_BadSE;		 //前津ニキが落ち込む時のSE
 
+	int TimeLimit;		 //制限時間
+
 	Player* player;      //プレイヤー
 	Enemy** enemy;       //敵 ダブルポインタなので配列の先頭のアドレス(場所)を指す
 	TitleScene* title;

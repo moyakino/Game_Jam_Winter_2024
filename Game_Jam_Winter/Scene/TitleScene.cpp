@@ -28,15 +28,15 @@ void TitleScene::Initialize()
 	end_image = LoadGraph("Resource/images/end_m.bmp");
 	cursor_image = LoadGraph("Resource/images/cone.bmp");
 	cursor_down_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
-	ChangeVolumeSoundMem(125, cursor_down_se);
+	ChangeVolumeSoundMem(255, cursor_down_se);
 	cursor_up_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
-	ChangeVolumeSoundMem(125, cursor_up_se);
+	ChangeVolumeSoundMem(255, cursor_up_se);
 	mae2_image = LoadGraph("Resource/images/Title_img.png");
 	//ChangeVolumeSoundMem(150, Title_Bgm);
 
 	//前津ニキSE再生
 	Mae_se = LoadSoundMem("Resource/music/SE/maetu_決定_トリミング.wav");
-	ChangeVolumeSoundMem(255, Mae_se);
+	ChangeVolumeSoundMem(400, Mae_se);
 
 	//エラーチェック
 	if (background_image == -1)
