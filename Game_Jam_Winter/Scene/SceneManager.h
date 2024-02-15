@@ -12,6 +12,7 @@ class SceneManager
 {
 private:
 	SceneBase* current_scene;   //現在シーン情報
+	int BGM;					//BGM
 
 public:
 	SceneManager();

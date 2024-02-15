@@ -222,10 +222,12 @@ bool RankingInputScene::InputName()
     }
 
     //カーソル位置の文字を決定する
-    if (InputControl::GetButtonDown(XINPUT_BUTTON_A))
+    if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
     {
         if (cursor_y < 2)
         {
+            PlaySoundMem(Mae_DecitionSE, DX_PLAYTYPE_BACK, TRUE);
+
             name[name_num++] = 'a' + cursor_x + (cursor_y * 13);
             if (name_num == 14)
             {
@@ -235,6 +237,8 @@ bool RankingInputScene::InputName()
         }
         else if (cursor_y < 4)
         {
+            PlaySoundMem(Mae_DecitionSE, DX_PLAYTYPE_BACK, TRUE);
+
             name[name_num++] = 'A' + cursor_x + ((cursor_y - 2) * 13);
             if (name_num == 14)
             {
@@ -248,7 +252,6 @@ bool RankingInputScene::InputName()
             {
                 if (name_num < 1) {
                     error_message = TRUE;
-                    PlaySoundMem(Mae_DecitionSE, DX_PLAYTYPE_BACK, TRUE);
                     return false;
                 }
                 else {
@@ -265,7 +268,7 @@ bool RankingInputScene::InputName()
         }
     }
 
-    if (InputControl::GetButtonDown(XINPUT_BUTTON_B)) {
+    if (InputControl::GetButtonDown(XINPUT_BUTTON_A)) {
         name[--name_num] = NULL;
         PlaySoundMem(Mae_ExitSE, DX_PLAYTYPE_BACK, TRUE);
     }

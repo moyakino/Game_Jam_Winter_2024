@@ -3,7 +3,7 @@
 #include "DxLib.h"
 
 TitleScene::TitleScene() :background_image(NULL), /*menu_image(NULL),*/kuruma_image(NULL), state_image(NULL), help_image(NULL), ranking_image(NULL), end_image(NULL),
-cursor_image(NULL), mae2_image(NULL), menu_cursor(0), Title_Bgm(0), cursor_down_se(0), cursor_up_se(0), Mae_se(0)
+cursor_image(NULL), mae2_image(NULL), menu_cursor(0), cursor_down_se(0), cursor_up_se(0), Mae_se(0)
 {
 
 }
@@ -28,15 +28,14 @@ void TitleScene::Initialize()
 	end_image = LoadGraph("Resource/images/end_m.bmp");
 	cursor_image = LoadGraph("Resource/images/cone.bmp");
 	cursor_down_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
+	ChangeVolumeSoundMem(150, cursor_down_se);
 	cursor_up_se = LoadSoundMem("Resource/music/SE/Title_cursor_se.wav");
 	mae2_image = LoadGraph("Resource/images/Title_img.png");
-	//タイトルBGM
-	Title_Bgm = LoadSoundMem("Resource/music/BGM/Title.wav");
-	//音声ファイルのボリュームを変更できる 0:無音 255:最大音量
-	ChangeVolumeSoundMem(50, Title_Bgm);
+	//ChangeVolumeSoundMem(150, Title_Bgm);
 
 	//前津ニキSE再生
 	Mae_se = LoadSoundMem("Resource/music/SE/maetu_決定_トリミング.wav");
+	ChangeVolumeSoundMem(255, Mae_se);
 
 	//エラーチェック
 	if (background_image == -1)
@@ -58,10 +57,6 @@ void TitleScene::Initialize()
 	{
 		throw("Resource/images/cursor.bmpがありません\n");
 	}
-	if (Title_Bgm == -1)
-	{
-		throw("Resource/music/BGM/Title_and_help_bgm.wavがありません\n");
-	}
 	if (cursor_down_se == -1)
 	{
 		throw("Resource/music/SE/Title_cursor_se.wavがありません\n");
@@ -76,8 +71,6 @@ void TitleScene::Initialize()
 //更新処理
 eSceneType TitleScene::Update()
 {
-	PlaySoundMem(Title_Bgm, DX_PLAYTYPE_LOOP, FALSE);
-
 	//カーソル下移動
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_DOWN))
 	{
@@ -111,8 +104,6 @@ eSceneType TitleScene::Update()
 		switch (menu_cursor)
 		{
 		case 0:
-			StopSoundMem(Title_Bgm);
-			DeleteSoundMem(Title_Bgm);
 			return eSceneType::E_MAIN;
 
 		case 1:
@@ -154,7 +145,6 @@ void TitleScene::Draw()const
 	DrawGraph(200, 320, end_image, TRUE);
 
 	DrawGraph(80, 40, mae2_image, TRUE);
-
 
 	//カーソル画像の描画
 	DrawRotaGraph(180, 220 + menu_cursor * 40, 0.7, DX_PI / 2.0, cursor_image, TRUE);
