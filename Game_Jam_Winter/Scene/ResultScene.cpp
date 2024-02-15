@@ -3,7 +3,7 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-ResultScene::ResultScene() :back_ground(NULL), score(0)
+ResultScene::ResultScene() :back_ground(NULL), back_maetu(0), score(0)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -27,6 +27,7 @@ void ResultScene::Initialize()
 
 	//画像の読み込み
 	back_ground = LoadGraph("Resource/images/リザルト.png");
+	back_maetu = LoadGraph("Resource/images/Player/maetu_125_166/透過/maetu_touka_tyokuritu_125_166.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
 
 	//エラーチェック
@@ -79,6 +80,7 @@ void ResultScene::Draw()const
 {
 	//背景画像を描画
 	DrawRotaGraph(320, 430,0.5f, 0, back_ground, FALSE, FALSE);
+	DrawGraph(300, 315, back_maetu, TRUE);
 
 	SetBackgroundColor(255, 255, 255);
 

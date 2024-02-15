@@ -51,7 +51,7 @@ void SceneManager::Initialize()
 	ChangeVolumeSoundMem(100, BGM);
 
 	//タイトルシーンから始める
-	ChangeScene(eSceneType::E_TITLE);
+	ChangeScene(eSceneType::E_RESULT);
 }
 
 
