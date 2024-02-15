@@ -5,6 +5,8 @@
 #include "../Object/Enemy.h"
 #include "../Scene/TitleScene.h"
 
+#define PI    3.1415926535897932384626433832795f
+
 class GameMainScene :public SceneBase
 {
 private:
@@ -21,6 +23,13 @@ private:
 
 	bool ScoreString;	//加算スコアを描画
 	int DrawPlusScoreCount;	//加算したスコアの時間を測るタイマー
+	int Biku_Get_SE = 0;
+	int Car_Get_SE = 0;
+	
+	int GameMain_UI_ArrayImg[3];
+
+	int fps = 0;
+	int Count = 0;
 
 	int Mae_HappySE;	 //前津ニキが喜ぶ時のSE
 	int Mae_BadSE;		 //前津ニキが落ち込む時のSE
