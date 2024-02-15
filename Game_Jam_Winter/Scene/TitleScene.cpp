@@ -36,7 +36,7 @@ void TitleScene::Initialize()
 
 	//前津ニキSE再生
 	Mae_se = LoadSoundMem("Resource/music/SE/maetu_決定_トリミング.wav");
-	ChangeVolumeSoundMem(400, Mae_se);
+	ChangeVolumeSoundMem(500, Mae_se);
 
 	//エラーチェック
 	if (background_image == -1)
