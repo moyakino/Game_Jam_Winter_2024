@@ -194,7 +194,7 @@ eSceneType GameMainScene::Update()
                 if (enemy[i]->GetType() == 3) {
                     PlaySoundMem(Biku_Get_SE, DX_PLAYTYPE_BACK, TRUE);
                     score += 10000;
-                    player->DecreaseTyokin(-1000.0f);//貯金減らす
+                    //player->DecreaseTyokin(-1000.0f);//貯金減らす
                     player->SetIsBike(false);//バイク触れたアニメーション変更
                     PlaySoundMem(Mae_HappySE, DX_PLAYTYPE_BACK, TRUE);
                     ScoreString = TRUE;
@@ -203,7 +203,7 @@ eSceneType GameMainScene::Update()
                 else {
                     PlaySoundMem(Car_Get_SE, DX_PLAYTYPE_BACK, TRUE);
                     player->DecreaseHp(-100.0f);     //体力(心)減らす
-                    player->DecreaseTyokin(-2000.0f);//貯金減らす
+                    //player->DecreaseTyokin(-2000.0f);//貯金減らす
                     PlaySoundMem(Mae_BadSE, DX_PLAYTYPE_BACK, TRUE);
                     player->SetIsCar(false); //車触れたアニメーション変更
                 }
@@ -292,27 +292,30 @@ void GameMainScene::Draw()const
 
     //体力(心)ゲージの描画
     float fx = 510.0f;
-    float fy = 50.0;
+    float fy = 55.0;
     DrawFormatString(fx, fy, GetColor(255, 255, 255), "体力ゲージ");
     DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / MAXHP), fy + 40.0f,GetColor(255, 0, 0), TRUE);
     DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0),FALSE);
 
     //貯金ゲージの描画
-    fx = 510.0f;
+    /*fx = 510.0f;
     fy = 100.0f;
     DrawFormatString(fx, fy, GetColor(255, 255, 255), "貯金額");
     DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,GetColor(0, 102, 204), TRUE);
-    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
+    DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);*/
 
     //UI
-    DrawRotaGraphF(570.0f, 200.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[0], TRUE, TRUE);
-    DrawFormatString(510, 250, GetColor(255, 255, 255), "スコア：_____");
+    DrawRotaGraphF(570.0f, 160.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[0], TRUE, TRUE);
+    DrawFormatString(510, 210, GetColor(255, 255, 255), "スコア：_____");
 
-    DrawRotaGraphF(570.0f, 310.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[1], TRUE, TRUE);
-    DrawFormatString(510, 360, GetColor(255, 255, 255), "スコア：_____");
+    DrawRotaGraphF(570.0f, 290.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[1], TRUE, TRUE);
+    DrawFormatString(510, 340, GetColor(255, 255, 255), "スコア：_____");
 
-    DrawRotaGraphF(570.0f, 420.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
-    DrawFormatString(510, 470, GetColor(255, 255, 255), "スコア：_____");
+    DrawRotaGraphF(570.0f, 410.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
+    DrawFormatString(510, 460, GetColor(255, 255, 255), "スコア：_____");
+
+    DrawRotaGraphF(570.0f, 530.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
+    DrawFormatString(510, 573, GetColor(255, 255, 255), "スコア：_____");
 
     if (ScoreString == TRUE) {
         DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");
