@@ -309,7 +309,7 @@ void GameMainScene::Draw()const
     //DrawFormatString(510, 573, GetColor(255, 255, 255), "スコア：_____");
 
     if (ScoreString == TRUE) {
-        DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "1000");
+        DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "+1000");
     }
 
     SetFontSize(20);
