@@ -198,6 +198,7 @@ eSceneType GameMainScene::Update()
                     player->SetIsBike(false);//バイク触れたアニメーション変更
                     PlaySoundMem(Mae_HappySE, DX_PLAYTYPE_BACK, TRUE);
                     ScoreString = TRUE;
+                    DrawPlusScoreCount = 0;
                 }
                 else {
                     PlaySoundMem(Car_Get_SE, DX_PLAYTYPE_BACK, TRUE);

@@ -19,6 +19,9 @@ void RankingDispScene::Initialize()
 	//画像の読み込み
 	background_image = LoadGraph("Resource/images/Ranking.bmp");
 
+	//タイトルに戻る時のSE読み込み
+	Title_ExitSE = LoadSoundMem("Resource/music/SE/maetu_戻る_トリミング.wav");
+
 	//エラーチェック
 	if (background_image == -1)
 	{
