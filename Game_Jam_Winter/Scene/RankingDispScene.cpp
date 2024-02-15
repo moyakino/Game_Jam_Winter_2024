@@ -22,7 +22,7 @@ void RankingDispScene::Initialize()
 	//タイトルに戻る時のSE読み込み
 	Title_ExitSE = LoadSoundMem("Resource/music/SE/maetu_戻る_トリミング.wav");
 
-	ChangeVolumeSoundMem(430, Title_ExitSE);
+	ChangeVolumeSoundMem(700, Title_ExitSE);
 
 	//エラーチェック
 	if (background_image == -1)

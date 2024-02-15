@@ -7,7 +7,7 @@
 #define HEIGHT 600
 #define MAXHP 5000
 #define MAXTYOKIN 20000
-#define TIMELIMIT 60
+#define TIMELIMIT 30
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
 barrier_image(NULL), main_song_handle(0), player(nullptr),
