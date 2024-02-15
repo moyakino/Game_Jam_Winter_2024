@@ -164,6 +164,7 @@ eSceneType GameMainScene::Update()
                     player->SetIsBike(false);//バイク触れたアニメーション変更
                     PlaySoundMem(Mae_HappySE, DX_PLAYTYPE_BACK, TRUE);
                     ScoreString = TRUE;
+                    DrawPlusScoreCount = 0;
                 }
                 else {
                     player->DecreaseHp(-100.0f);     //体力(心)減らす
