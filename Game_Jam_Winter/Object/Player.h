@@ -18,6 +18,7 @@ private:
 	float hp;           //体力(心)
 	float tyokin;       //貯金
 
+	int HitFrame;
 	int maetuCount;     //画像変更時間
 	int keyCount;       //入力クールタイム
 
