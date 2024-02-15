@@ -2,13 +2,13 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-#define WIDTH 640.0f
-#define HEIGHT 600.0f
-#define KEYTIME 8
+#define WIDTH 640.0f    //画面サイズ
+#define HEIGHT 600.0f   // 画面サイズ
+#define KEYTIME 8       //横移動の入力CT　小さい程速めに入力できる
 
-#define MAXHP 1000
-#define MAXTYOKIN 20000
-#define MAETUTIME 15
+#define MAXHP 1000      //最大HP
+#define MAXTYOKIN 20000 //最大貯金額
+#define MAETUTIME 15    //前津ニキのアニメーション変更　小さい程すぐ終わる
 
 Player::Player() :is_car(false), is_bike(false), image(NULL), nowMaetu(0),
 location(0.0f), box_size(0.0f), angle(0.0f),
