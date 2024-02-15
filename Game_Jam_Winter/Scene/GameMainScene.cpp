@@ -308,6 +308,12 @@ void GameMainScene::Draw()const
     DrawRotaGraphF(570.0f, 200.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[0], TRUE, TRUE);
     DrawFormatString(510, 250, GetColor(255, 255, 255), "スコア：_____");
 
+    DrawRotaGraphF(570.0f, 310.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[1], TRUE, TRUE);
+    DrawFormatString(510, 360, GetColor(255, 255, 255), "スコア：_____");
+
+    DrawRotaGraphF(570.0f, 420.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
+    DrawFormatString(510, 470, GetColor(255, 255, 255), "スコア：_____");
+
     if (ScoreString == TRUE) {
         DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");
     }
