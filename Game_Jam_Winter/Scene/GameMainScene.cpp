@@ -5,7 +5,7 @@
 
 #define WIDTH 640
 #define HEIGHT 600
-#define MAXHP 1000
+#define MAXHP 5000
 #define MAXTYOKIN 20000
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
@@ -43,7 +43,7 @@ void GameMainScene::Initialize()
     //画像の読み込み
     back_ground = LoadGraph("Resource/images/back01.bmp"); //背景画像(道路の画像)の読み込み
     barrier_image = LoadGraph("Resource/images/barrier.png"); //バリア画像の読み込み
-    int result = LoadDivGraph("Resource/images/enemy.png", 4, 4, 1, 63, 120, enemy_image); //敵の分割読み込み
+    int result = LoadDivGraph("Resource/images/bikes.png", 4, 4, 1, 63, 120, enemy_image); //敵の分割読み込み
 
     GameMain_UI_ArrayImg[0] = LoadGraph("Resource/images/バイク1_透過.png"); //UI画像
     GameMain_UI_ArrayImg[1] = LoadGraph("Resource/images/バイク2_透過.png"); //UI画像
@@ -61,6 +61,7 @@ void GameMainScene::Initialize()
 
     Biku_Get_SE = LoadSoundMem("Resource/music/SE/maetu_喜ぶ_トリミング.wav");
     Car_Get_SE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
+
     //ChangeVolumeSoundMem(100, main_song_handle);
 
     //エラーチェック 画像が正しく読み込まれているかの確認
@@ -191,10 +192,9 @@ eSceneType GameMainScene::Update()
             //当たり判定の確認
             if (IsHitCheck(player, enemy[i]))
             {
-                if (enemy[i]->GetType() == 3) {
+                if (enemy[i]->GetType() == 0) {
                     PlaySoundMem(Biku_Get_SE, DX_PLAYTYPE_BACK, TRUE);
                     score += 1000;
-                    player->DecreaseTyokin(-1000.0f);//貯金減らす
                     player->SetIsBike(false);//バイク触れたアニメーション変更
                     PlaySoundMem(Mae_HappySE, DX_PLAYTYPE_BACK, TRUE);
                     ScoreString = TRUE;
@@ -202,7 +202,7 @@ eSceneType GameMainScene::Update()
                 }
                 else {
                     PlaySoundMem(Car_Get_SE, DX_PLAYTYPE_BACK, TRUE);
-                    player->DecreaseHp(-100.0f);     //体力(心)減らす
+                    player->DecreaseHp(-750.0f);     //体力(心)減らす
                     //player->DecreaseTyokin(-2000.0f);//貯金減らす
                     PlaySoundMem(Mae_BadSE, DX_PLAYTYPE_BACK, TRUE);
                     player->SetIsCar(false); //車触れたアニメーション変更
@@ -292,7 +292,7 @@ void GameMainScene::Draw()const
     DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0),FALSE);
 
     //貯金ゲージの描画
-    fx = 510.0f;
+    /*fx = 510.0f;
     fy = 100.0f;
     DrawFormatString(fx, fy, GetColor(255, 255, 255), "貯金額");
     DrawBoxAA(fx, fy + 20.0f, fx + (player->GetTyokin() * 100 / MAXTYOKIN), fy + 40.0f,GetColor(0, 102, 204), TRUE);

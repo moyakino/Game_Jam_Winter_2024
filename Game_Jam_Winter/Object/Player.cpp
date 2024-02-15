@@ -6,7 +6,7 @@
 #define HEIGHT 600.0f   // 画面サイズ
 #define KEYTIME 8       //横移動の入力CT　小さい程速めに入力できる
 
-#define MAXHP 1000      //最大HP
+#define MAXHP 5000      //最大HP
 #define MAXTYOKIN 20000 //最大貯金額
 #define MAETUTIME 15    //前津ニキのアニメーション変更　小さい程すぐ終わる
 
