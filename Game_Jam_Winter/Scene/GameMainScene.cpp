@@ -7,6 +7,7 @@
 #define HEIGHT 600
 #define MAXHP 5000
 #define MAXTYOKIN 20000
+#define TIMELIMIT 60
 
 GameMainScene::GameMainScene() :high_score(0), back_ground(NULL),
 barrier_image(NULL), main_song_handle(0), player(nullptr),
@@ -37,6 +38,8 @@ GameMainScene::~GameMainScene()
 //初期化処理
 void GameMainScene::Initialize()
 {
+    TimeLimit = TIMELIMIT;
+
     //高得点値を読み込む
     ReadHighScore();
 
@@ -58,6 +61,10 @@ void GameMainScene::Initialize()
     Mae_BadSE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
 
     ChangeVolumeSoundMem(50, main_song_handle);
+
+    ChangeVolumeSoundMem(150, Mae_HappySE);
+
+    ChangeVolumeSoundMem(350, Mae_BadSE);
 
     Biku_Get_SE = LoadSoundMem("Resource/music/SE/maetu_喜ぶ_トリミング.wav");
     Car_Get_SE = LoadSoundMem("Resource/music/SE/maetu_悲しむ_トリミング.wav");
@@ -267,20 +274,6 @@ void GameMainScene::Draw()const
     DrawBox(500, 0, WIDTH, HEIGHT, GetColor(255, 255, 255), FALSE);
 
     SetFontSize(16);
-    /*DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
-    DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", high_score);
-    DrawFormatString(510, 80, GetColor(0, 0, 0), "避けた数");
-
-    for (int i = 0; i < 3; i++)
-    {
-        DrawRotaGraph(523 + (i * 50), 120, 0.3, 0, enemy_image[i], TRUE, FALSE);
-        DrawFormatString(510 + (i * 50), 140, GetColor(255, 255, 255), "%03d", enemy_count[i]);
-    }*/
-
-    /*DrawFormatString(510, 200, GetColor(0, 0, 0), "走行距離");
-    DrawFormatString(555, 220, GetColor(255, 255, 255), "%08d", mileage / 10);
-    DrawFormatString(510, 240, GetColor(0, 0, 0), "スピード");
-    DrawFormatString(555, 260, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());*/
 
     DrawFormatString(510, 15, GetColor(255, 255, 255), "スコア：%06d", score);
 
@@ -311,6 +304,7 @@ void GameMainScene::Draw()const
     DrawRotaGraphF(570.0f, 530.0f, 0.9f, PI / -2, GameMain_UI_ArrayImg[2], TRUE, TRUE);
     DrawFormatString(510, 573, GetColor(255, 255, 255), "スコア：_____");
 
+    /*DrawFormatString(570, , GetColor(255, 255, 255), "体力ゲージ");*/
     if (ScoreString == TRUE) {
         DrawFormatString(player->GetLocation().x - 30, (player->GetLocation().y - 20) - DrawPlusScoreCount, GetColor(255, 0, 0), "10000");
     }

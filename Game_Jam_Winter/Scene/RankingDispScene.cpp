@@ -22,6 +22,8 @@ void RankingDispScene::Initialize()
 	//タイトルに戻る時のSE読み込み
 	Title_ExitSE = LoadSoundMem("Resource/music/SE/maetu_戻る_トリミング.wav");
 
+	ChangeVolumeSoundMem(430, Title_ExitSE);
+
 	//エラーチェック
 	if (background_image == -1)
 	{
@@ -40,14 +42,9 @@ void RankingDispScene::Initialize()
 eSceneType RankingDispScene::Update()
 {
 	//Aボタンが押されたら、タイトルに戻る
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A))
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) || InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
-		return eSceneType::E_TITLE;
-	}
-
-	//Bボタンが押されても、タイトルに戻る
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
-	{
+		PlaySoundMem(Title_ExitSE, DX_PLAYTYPE_BACK, FALSE);
 		return eSceneType::E_TITLE;
 	}
 

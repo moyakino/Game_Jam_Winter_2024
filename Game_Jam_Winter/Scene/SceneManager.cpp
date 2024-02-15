@@ -48,7 +48,7 @@ void SceneManager::Initialize()
 	}
 
 	BGM = LoadSoundMem("Resource/music/BGM/Title.wav");
-	ChangeVolumeSoundMem(55, BGM);
+	ChangeVolumeSoundMem(100, BGM);
 
 	//タイトルシーンから始める
 	ChangeScene(eSceneType::E_TITLE);
